@@ -12,14 +12,17 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create();
-
-        \App\User::create([
-            'name' => 'Moeen Basra',
-            'email' => 'm.basra@live.com',
+        $user = \App\User::create([
+            'name' => 'admin',
+            'username' => 'admin',
+            'email' => 'admin@admin.com',
             'password' => bcrypt('secret'),
-            'is_admin' => true,
+            'type' => 0,
             'remember_token' => Str::random(10),
+        ]);
+
+        \App\SuperAgent::create([
+            'user_id' => $user->id,
         ]);
     }
 }

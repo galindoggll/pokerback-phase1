@@ -17,11 +17,11 @@ const propTypes = {
 }
 
 function PublicLayout({ children }) {
-  return <div style={containerStyle}>
+  return <div>
     <Navigation/>
-    <main style={{ minHeight: '100vh'}}>
+    <main>
       { children }
-      <ScrollTop />
+      {/*?<ScrollTop />*/}
     </main>
     <Footer/>
   </div>

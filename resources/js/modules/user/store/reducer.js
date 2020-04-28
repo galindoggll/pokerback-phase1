@@ -1,8 +1,11 @@
 import User from '../User'
-import { USER_UPDATE , USER_UNSET } from './action-types'
+import { USER_UPDATE , USER_UNSET, GET_DETAILS } from './action-types'
 import { AUTH_LOGOUT, AUTH_USER } from '../../auth/store/action-types'
 
-const initialState = Object.assign({}, new User({}))
+const initialState = {
+  user: {},
+  info: []
+}
 
 const reducer = (state = initialState, { type, payload = null }) => {
   switch (type) {
@@ -10,6 +13,8 @@ const reducer = (state = initialState, { type, payload = null }) => {
       return authUser(state, payload)
     case USER_UPDATE:
       return updateUser(state, payload);
+    case GET_DETAILS:
+      return getDetails(state, payload);
     case AUTH_LOGOUT:
     case USER_UNSET:
       return unsetUser(state);
@@ -33,6 +38,13 @@ function unsetUser(state) {
 function authUser(state, user) {
   return {
     ...state, ...user
+  }
+}
+
+function getDetails(state, payload) {
+  return {
+    ...state,
+    info: payload
   }
 }
 

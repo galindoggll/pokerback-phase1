@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { login } from '../../service'
 import ReeValidate from 'ree-validate'
+import { fetchUser } from '../../../auth/service'
 
 // import components
 import Form from './components/Form'
@@ -52,6 +53,9 @@ class Page extends Component {
   // remove body style before component leaves dom
   componentWillUnmount() {
     $('body').removeAttr('style')
+    setTimeout(function() { //Start the timer
+      this.props.dispatch(fetchUser()) //After 1 second, set render to true
+    }.bind(this), 1000)
   }
 
   // event to handle input change

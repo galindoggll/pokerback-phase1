@@ -7,14 +7,17 @@ const displayName = 'RegisterFrom'
 const propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  phone: PropTypes.string,
+  selectValue: PropTypes.number,
   password: PropTypes.string.isRequired,
   passwordConfirmation: PropTypes.string.isRequired,
   errors: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleTypeChange: PropTypes.func,
 }
 
-const Form = ({ name, email, password, passwordConfirmation, errors, handleChange, handleSubmit }) => {
+const Form = ({ name, email, phone, password, selectValue, passwordConfirmation, errors, handleChange, handleSubmit, handleTypeChange }) => {
   return (<form className="form" role="form" onSubmit={handleSubmit} noValidate>
     <h2 className="card-title">Sign up</h2>
     <div className="form-group">
@@ -42,6 +45,26 @@ const Form = ({ name, email, password, passwordConfirmation, errors, handleChang
              required
              autoFocus/>
       {errors.has('email') && <div className="invalid-feedback">{errors.first('email')}</div>}
+    </div>
+    <div className="form-group">
+      <label htmlFor="phone" className="sr-only">Phone</label>
+      <input type="text"
+             className={`form-control form-control-lg rounded-0`}
+             name="phone"
+             id="phone"
+             placeholder="Phone Number"
+             value={phone || ''}
+             onChange={e => handleChange(e.target.name, e.target.value)}
+             autoFocus/>
+    </div>
+    <div className="form-group">
+      <select defaultValue={selectValue}
+              className="form-control form-control-lg rounded-0"
+              onChange={e => handleTypeChange(e)} >
+        <option value="0">Super Agent</option>
+        <option value="1">Agent</option>
+        <option value="2">Player</option>
+      </select>
     </div>
     <div className="form-group">
       <label htmlFor="password" className="sr-only">Password</label>

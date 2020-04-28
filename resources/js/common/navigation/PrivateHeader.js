@@ -1,53 +1,63 @@
 // import libs
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
-// import components
-import { Collapse, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import NavItem from './NavItem'
+class PrivateHeader extends Component {
+  static displayName = 'PrivateHeader'
+  static propTypes = {
+    dispatch: PropTypes.func,
+    user: PropTypes.object.isRequired,
+    showNavigation: PropTypes.bool.isRequired,
+    showDropdown: PropTypes.bool.isRequired,
+    toggleDropdown: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+  };
 
-// define component name
-const displayName = 'PrivateHeader'
+  constructor(props) {
+    super(props);
+  }
 
-// validate properties
-const propTypes = {
-  user: PropTypes.object.isRequired,
-  showNavigation: PropTypes.bool.isRequired,
-  showDropdown: PropTypes.bool.isRequired,
-  toggleDropdown: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
+  renderNavItems() {
+    const {user} = this.props
+    if (user.type === 0) {
+      return (
+        <nav className="my-2 my-md-0 mr-md-3">
+          <a className="p-2 text-dark" href="/">Home</a>
+          <a className="p-2 text-dark" href="/agents">Agents</a>
+          <a className="p-2 text-dark" href="/players">Players</a>
+          <a className="p-2 text-dark" href={`profile/${user.id}`}>Profile</a>
+        </nav>)
+    }
+    if (user.type === 1) {
+      return (
+        <nav className="my-2 my-md-0 mr-md-3">
+          <a className="p-2 text-dark" href="/">Home</a>
+          <a className="p-2 text-dark" href="/players">Players</a>
+          <a className="p-2 text-dark" href={`profile/${user.id}`}>Profile</a>
+        </nav>)
+    }
+    if (user.type === 2) {
+      return (
+        <nav className="my-2 my-md-0 mr-md-3">
+          <a className="p-2 text-dark" href="/">Home</a>
+          <a className="p-2 text-dark" href="/players">Report</a>
+          <a className="p-2 text-dark" href={`profile/${user.id}`}>Profile</a>
+        </nav>)
+    }
+  }
+
+  render() {
+    return (
+      <div
+        className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h5 className="my-0 mr-md-auto font-weight-normal">Bluebird Gaming Inc.</h5>
+        {this.renderNavItems()}
+
+        <a className="btn btn-outline-danger" onClick={e => this.props.logout(e)}>Log Out</a>
+      </div>
+    );
+  }
 }
 
-// initiate comppnent
-const PrivateHeader = ({ user, showNavigation, showDropdown, toggleDropdown, logout }) => (
-  <Collapse className="navbar-collapse" isOpen={showNavigation}>
-    <ul className="navbar-nav mr-auto">
-      <NavItem path="/">Home</NavItem>
-      <NavItem path="/articles">Articles</NavItem>
-    </ul>
-    
-    <ul className="navbar-nav">
-      <Dropdown isOpen={showDropdown} toggle={toggleDropdown}>
-        <DropdownToggle nav caret>
-          { user.name }
-        </DropdownToggle>
-        <DropdownMenu className="dropdown-menu-right">
-          <Link className='dropdown-item' to={`/users/${user.id}/edit`}>
-            <span className="fa fa-user-o" title="logout" aria-hidden="true"/> Profile
-          </Link>
-          <DropdownItem divider />
-          <DropdownItem onClick={e => logout(e)}>
-            <span className="fa fa-sign-out" title="logout" aria-hidden="true"/> Logout
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    </ul>
-  </Collapse>)
-
-// bind properties
-PrivateHeader.displayName = displayName
-PrivateHeader.propTypes = propTypes
-
-// export component
-export default PrivateHeader
+export default PrivateHeader;

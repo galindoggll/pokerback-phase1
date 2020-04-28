@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Agent;
 use App\Http\Controllers\Controller;
+use App\Player;
+use App\SuperAgent;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -56,10 +59,52 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
+            'username' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'type' => $data['type'],
             'password' => bcrypt($data['password']),
         ]);
+
+        if ($data['type'] == 0) {
+            SuperAgent::create([
+                'user_id' => $user->id,
+            ]);
+        }
+        if ($data['type'] == 1) {
+            Agent::create([
+                'user_id' => $user->id,
+            ]);
+        }
+        if ($data['type'] == 2) {
+
+            $playerId = $this->generatePlayerId();
+            Player::create([
+                'user_id' => $user->id,
+                'player_id' => $playerId,
+            ]);
+        }
+
+        return $user;
+    }
+
+    public function generatePlayerId() {
+        $playerId = mt_rand(100000, 999999);
+
+        // call the same function if the barcode exists already
+        if ($this->playerIdExists($playerId)) {
+            return $this->generatePlayerId();
+        }
+
+        // otherwise, it's valid and can be used
+        return $playerId;
+    }
+
+    public function playerIdExists($playerId) {
+        // query the database and return a boolean
+        // for instance, it might look like this in Laravel
+        return Player::wherePlayerId($playerId)->exists();
     }
 }

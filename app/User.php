@@ -18,10 +18,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'phone',
-        'about',
         'password',
+        'type',
     ];
 
     /**
@@ -34,17 +35,54 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $casts = [
-        'is_admin' => 'boolean',
-    ];
-
     /**
      * The relation between user and articles
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return Paginator
      */
+    public static function loadAllAgents()
+    {
+        return static::latest()
+            ->where('type', 1)
+            ->paginate();
+    }
+
+    public static function loadAgent()
+    {
+        return static::with('agent')
+            ->latest()
+            ->paginate();
+    }
+
+    public static function loadAllPlayers()
+    {
+        return static::latest()
+            ->where('type', 2)
+            ->paginate();
+    }
+
+
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function superAgent(): HasMany
+    {
+        return $this->HasMany(SuperAgent::class);
+    }
+
+    public function agent(): HasMany
+    {
+        return $this->HasMany(Agent::class);
+    }
+
+    public function player(): HasMany
+    {
+        return $this->HasMany(Player::class);
+    }
+
+    public function userAgent()
+    {
+        return $this->hasManyThrough(User::class, Player::class, 'agent_id', 'id', 'id', 'id');
     }
 }

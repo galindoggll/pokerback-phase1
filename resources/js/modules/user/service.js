@@ -2,6 +2,10 @@ import Http from '../../utils/Http'
 import Transformer from '../../utils/Transformer'
 import * as userActions from './store/actions'
 
+function transformResponse(params) {
+  return Transformer.fetch(params)
+}
+
 export function userUpdateRequest(params) {
   return dispatch => (
     new Promise((resolve, reject) => {
@@ -32,4 +36,17 @@ export function userUpdateRequest(params) {
         })
     })
   )
+}
+
+export function userDetails(id) {
+  return dispatch => {
+    Http.get('/info/'+ id.id)
+      .then((res) => {
+        dispatch(userActions.getDetails(transformResponse(res.data)))
+      })
+      .catch((err) => {
+        // TODO: handle err
+        console.log(err)
+      })
+  }
 }

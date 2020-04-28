@@ -43,16 +43,15 @@ class Navigation extends Component {
   }
   
   logout(e) {
+    console.log('we');
     e.preventDefault()
-    
+
     this.props.dispatch(logout())
   }
   
   render() {
     return (
-      <Navbar className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-        <Link to="/" className="navbar-brand">MOEEN.ME</Link>
-        <NavbarToggler className="navbar-toggler d-lg-none" onClick={this.toggleNavbar} />
+      <div>
         {
           this.props.isAuthenticated
             ? <PrivateHeader user={this.props.user}
@@ -62,7 +61,7 @@ class Navigation extends Component {
                              logout={this.logout} />
             : <PublicHeader showNavigation={this.state.showNavigation} />
         }
-      </Navbar>
+      </div>
     )
   }
 }

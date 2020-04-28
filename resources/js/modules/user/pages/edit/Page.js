@@ -8,6 +8,7 @@ import ReeValidate from 'ree-validate'
 // import components
 import Form from './components/Form'
 
+
 class Page extends Component {
   static displayName = 'UserPage'
   static propTypes = {
@@ -19,16 +20,14 @@ class Page extends Component {
     super(props)
     
     this.validator = new ReeValidate({
-      'name': 'required|min:3',
+      'username': 'required|min:3',
       'email': 'required|email',
       'phone': 'min:8|numeric',
-      'about': 'min:10|max:1024',
     })
-    
-    const user = this.props.user.toJson()
-    
+
     this.state = {
-      user,
+      user: this.props.user,
+      editedUser: {},
       errors: this.validator.errors
     }
     
@@ -37,7 +36,7 @@ class Page extends Component {
   }
   
   componentWillReceiveProps(nextProps) {
-    const user = nextProps.user.toJson()
+    const user = nextProps.user
     
     if (!_.isEqual(this.state.user, user)) {
       this.setState({ user })
@@ -89,17 +88,57 @@ class Page extends Component {
   }
   
   render() {
-    return <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-      <h1>Profile</h1>
-  
-      <section className="row">
-        <div className="col-12 col-md-9 col-sm-12">
-          <Form {...this.state}
-                onChange={this.handleChange}
-                onSubmit={this.handleSubmit}/>
+    console.log(this.state)
+    const {user, errors} = this.state
+    return (
+      <div className="container">
+        <form onSubmit={e => this.handleSubmit(e)}>
+        <div className="col-md-12 order-md-1">
+          <h4 className="mb-3">Edit Profile</h4>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label>Username</label>
+              <input type="text"
+                     id="username"
+                     name="username"
+                     className={`form-control ${errors.has('username') && 'is-invalid'} `}
+                     value={user.username || ''}
+                     onChange={e => this.handleChange(e.target.name, e.target.value)} />
+              {errors.has('username') && <div className="invalid-feedback">{errors.first('username')}</div>}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label>Email</label>
+              <input type="email"
+                     id="email"
+                     name="email"
+                     className={`form-control ${errors.has('email') && 'is-invalid'} `}
+                     value={user.email || ''}
+                     onChange={e => this.handleChange(e.target.name, e.target.value)} />
+              {errors.has('email') && <div className="invalid-feedback">{errors.first('email')}</div>}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label>Phone</label>
+              <input type="text"
+                     id="phone"
+                     name="phone"
+                     className={`form-control ${errors.has('phone') && 'is-invalid'} `}
+                     value={user.phone || ''}
+                     onChange={e => this.handleChange(e.target.name, e.target.value)} />
+              {errors.has('phone') && <div className="invalid-feedback">{errors.first('phone')}</div>}
+            </div>
+            <div className="col-md-3 mb-3 align-self-end">
+              <button className="btn btn-md btn-primary btn-block" type="submit">
+                Save
+              </button>
+            </div>
+          </div>
         </div>
-      </section>
-    </main>
+        </form>
+      </div>)
   }
 }
 

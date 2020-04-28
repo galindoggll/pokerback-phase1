@@ -22,7 +22,6 @@ class Layout extends Component {
 
   UNSAFE_componentWillMount() {
     const { isAuthenticated, user } = this.props
-
     if (isAuthenticated && !user.id) {
       this.props.dispatch(fetchUser())
     }
