@@ -39,3 +39,48 @@ export function agentDetails(id) {
       })
   }
 }
+
+export function unassignedPlayers() {
+  return dispatch => {
+    Http.get('/players-unassigned')
+      .then((res) => {
+        dispatch(agentActions.playerList(transformResponse(res.data)))
+      })
+      .catch((err) => {
+        // TODO: handle err
+        console.log(err)
+      })
+  }
+}
+
+export function assignPlayers(params) {
+  return dispatch => (
+    new Promise((resolve, reject) => {
+      Http.post('/assign-players', params)
+        .then(res => {
+          dispatch(agentActions.assignPlayers(transformResponse(res.data)))
+          return resolve()
+        })
+        .catch((err) => {
+          const statusCode = err.response.status;
+          const data = {
+            error: null,
+            statusCode,
+          };
+
+          if (statusCode === 422) {
+            const resetErrors = {
+              errors: err.response.data,
+              replace: false,
+              searchStr: '',
+              replaceStr: '',
+            };
+            data.error = Transformer.resetValidationFields(resetErrors);
+          } else if (statusCode === 401) {
+            data.error = err.response.data.message;
+          }
+          return reject(data);
+        })
+    })
+  )
+}

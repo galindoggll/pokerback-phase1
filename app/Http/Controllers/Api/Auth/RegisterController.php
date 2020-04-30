@@ -83,7 +83,7 @@ class RegisterController extends Controller
             $playerId = $this->generatePlayerId();
             Player::create([
                 'user_id' => $user->id,
-                'player_id' => $playerId,
+                'playing_id' => $playerId,
             ]);
         }
 
@@ -105,6 +105,6 @@ class RegisterController extends Controller
     public function playerIdExists($playerId) {
         // query the database and return a boolean
         // for instance, it might look like this in Laravel
-        return Player::wherePlayerId($playerId)->exists();
+        return Player::wherePlayingId($playerId)->exists();
     }
 }

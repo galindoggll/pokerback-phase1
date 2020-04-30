@@ -11,6 +11,15 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PlayerController extends Controller
 {
+    public function showPlayersNotAssigned()
+    {
+        $players = Player::query()
+            ->where('agent_id', 0)
+            ->with('user')
+            ->get();
+        return response([$players], 200);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,69 +37,19 @@ class PlayerController extends Controller
      * @param $id
      * @return LengthAwarePaginator|mixed
      */
-    public function assignAgent(Request $request, $id)
+    public function assignPlayers(Request $request)
     {
-        $player = Player::findOrFail($id);
+        $ids = $request->all();
+        foreach ($ids['players'] as $id => $value) {
+            if ($value) {
+                $player = Player::findOrFail($id);
 
-        $data['agent_id'] = $request['agent_id'];
-        $player->update($data);
-
-        return response()->json($player, 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param ArticleRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ArticleRequest $request)
-    {
-        $user = $request->user();
-
-        $article = new Article($request->validated());
-        $article->slug = Str::slug($request->get('title'));
-
-        $user->articles()->save($article);
-
-        return response()->json($article, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, $id)
-    {
-        if (!$request->user()->is_admin) {
-            return Article::mine($request->user()->id)->findOrFail($id);
+                $player->agent_id = $ids['agent'];
+                $player->save();
+            }
         }
 
-        return Article::findOrFail($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json(['success'], 200);
     }
 
     /**
@@ -121,10 +80,6 @@ class PlayerController extends Controller
      */
     public function delete($id)
     {
-        $article = Article::findOrFail($id);
 
-        $article->delete();
-
-        return response([], 200);
     }
 }

@@ -1,6 +1,8 @@
 import {
   AGENT_LIST,
   AGENT_DETAIL,
+  ASSIGN_PLAYERS,
+  PLAYERS_LIST,
 } from './action-types'
 
 const initialState = {
@@ -23,6 +25,10 @@ const reducer = (state = initialState, { type, payload = null }) => {
       return list(state, payload)
     case AGENT_DETAIL:
       return detail(state, payload)
+    case ASSIGN_PLAYERS:
+      return assignPlayers(state, payload)
+    case PLAYERS_LIST:
+      return playersList(state, payload)
     default:
       return state
   }
@@ -37,7 +43,22 @@ function list(state, payload) {
 function detail(state, payload) {
   return Object.assign({}, state, {
     ...state,
-    detail: payload
+    agent: payload.info[0],
+    userAgent: payload.user,
+    playerList: payload.info[0].userPlayer,
+  });
+}
+
+function playersList(state, payload) {
+  return Object.assign({}, state, {
+    ...state,
+    unassignedList: payload[0]
+  });
+}
+
+function assignPlayers(state, payload) {
+  return Object.assign({}, state, {
+    ...state,
   });
 }
 

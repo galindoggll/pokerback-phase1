@@ -6,8 +6,7 @@ import Page from './Page'
 const mapStateToProps = (state, router) => {
   const { params } = router.match
   return {
-    ...state,
-    agent: params
+    agent: state.agents
   }
 }
 

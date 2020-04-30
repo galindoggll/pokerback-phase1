@@ -18,6 +18,12 @@ class Player extends Model
         'rake',
     ];
 
+    public function loadPlayersUnAssigned()
+    {
+        return static::where('agent_id', 1)
+            ->paginate();
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

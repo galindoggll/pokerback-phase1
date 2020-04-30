@@ -2,13 +2,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import Loader from 'react-loader-spinner'
 import {agentListRequest} from '../../service'
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 // import components
 import {Link} from 'react-router-dom'
 import Pagination from './../../../article/pages/list/components/Pagination'
-import Loader from 'react-loader-spinner'
+
 
 class Page extends Component {
   static displayName = 'PlayersPage'
@@ -22,7 +22,6 @@ class Page extends Component {
     super(props)
 
     this.pageChange = this.pageChange.bind(this)
-    this.handleViewAgent = this.handleViewAgent.bind(this)
   }
 
   UNSAFE_componentWillMount() {
@@ -33,15 +32,6 @@ class Page extends Component {
 
   pageChange(pageNumber) {
     this.props.dispatch(agentListRequest({pageNumber}))
-  }
-
-  handleViewAgent(agent) {
-    console.log(agent)
-    //this.props.dispatch(agentListRequest({pageNumber}))
-  }
-
-  renderAgents() {
-
   }
 
   render() {
@@ -72,7 +62,7 @@ class Page extends Component {
                         <td>{agent.name}</td>
                         <td>{agent.email}</td>
                         <td>
-                          <button onClick={this.props.handleViewAgent} className="btn btn-primary">View Agent</button>
+                          <Link to={`agent/${agent.id}`} className="btn btn-primary">View Agent</Link>
                         </td>
                       </tr>)
                   })

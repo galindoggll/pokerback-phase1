@@ -41,8 +41,7 @@ class User extends Authenticatable
      */
     public static function loadAllAgents()
     {
-        return static::latest()
-            ->where('type', 1)
+        return static::where('type', 1)
             ->paginate();
     }
 
@@ -54,6 +53,13 @@ class User extends Authenticatable
     }
 
     public static function loadAllPlayers()
+    {
+        return static::latest()
+            ->where('type', 2)
+            ->paginate();
+    }
+
+    public static function loadPlayersNotAssigned()
     {
         return static::latest()
             ->where('type', 2)

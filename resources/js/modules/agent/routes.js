@@ -14,4 +14,10 @@ export default [
     auth: true,
     component: lazy(() => import('./pages/view/index')),
   },
+  {
+    path: '/assign-player/:id',
+    exact: true,
+    auth: true,
+    component: lazy(() => import('./pages/view/index')),
+  },
 ]

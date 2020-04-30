@@ -1,7 +1,11 @@
 export const AGENT_LIST = 'AGENT_LIST'
 export const AGENT_DETAIL = 'AGENT_DETAIL'
+export const ASSIGN_PLAYERS = 'ASSIGN_PLAYERS'
+export const PLAYERS_LIST = 'PLAYERS_LIST'
 
 export default {
   AGENT_LIST,
   AGENT_DETAIL,
+  ASSIGN_PLAYERS,
+  PLAYERS_LIST,
 }

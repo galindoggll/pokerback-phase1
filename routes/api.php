@@ -18,6 +18,8 @@ $api_version = config('api.api_version');
 
 Route::group(["prefix" => "{$api_version}"], function() {
     Route::get('info/{id}', 'UserController@show')->name('articles.index');
+    Route::get('players-unassigned/', 'PlayerController@showPlayersNotAssigned')->name('articles.index');
+    Route::post('assign-players/', 'PlayerController@assignPlayers')->name('articles.index');
     Route::get('agents/', 'UserController@showAllAgents')->name('articles.index');
     Route::get('players/', 'UserController@showAllPlayers')->name('articles.index');
     // register auth routes

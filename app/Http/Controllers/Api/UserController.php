@@ -37,11 +37,6 @@ class UserController extends Controller
         return User::loadAllAgents();
     }
 
-    public function showAgent($id)
-    {
-        return User::loadAgent($id);
-    }
-
     public function showAllPlayers()
     {
         return User::loadAllPlayers();
@@ -59,6 +54,6 @@ class UserController extends Controller
             $info = Player::where('user_id', $user['id'])->with('agent.user')->get();
         }
 
-        return response()->json($info, 200);
+        return response()->json(["user" => $user, "info" => $info], 200);
     }
 }
