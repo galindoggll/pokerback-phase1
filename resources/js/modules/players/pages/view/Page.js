@@ -30,27 +30,18 @@ class Page extends Component {
     dispatch(playerDetailRequest(match.params))
   }
 
-  renderTotalOwed() {
-    return <TotalOwed />
-  }
-
-  renderTotalRaked() {
-    return <TotalRaked />
-  }
-
   render() {
     const { playerDetail } = this.props.players
     if (playerDetail) {
       return (
         <div className="container">
-          <div className="row justify-content-center">
+          <div className="row">
             <div className="col-auto">
               <h3>Player Details</h3>
               <table className="table table-responsive table-striped">
                 <thead className="thead-inverse">
                 <tr>
                   <th>Player ID</th>
-                  <th>Region</th>
                   <th>Nickname</th>
                   <th>Memoname</th>
                   <th>Winnings</th>
@@ -59,8 +50,7 @@ class Page extends Component {
                 </thead>
                 <tbody>
                 <tr>
-                  <td>{playerDetail.playerId}</td>
-                  <td>{playerDetail.region}</td>
+                  <td>{playerDetail.playingId}</td>
                   <td>{playerDetail.nickname}</td>
                   <td>{playerDetail.memoname}</td>
                   <td>{playerDetail.winnings}</td>
@@ -70,7 +60,8 @@ class Page extends Component {
               </table>
             </div>
           </div>
-          <div className="row justify-content-center">
+          <hr/>
+          <div className="row">
             <div className="col-auto">
               <table className="table table-responsive table-striped">
                 <tbody>
@@ -82,34 +73,35 @@ class Page extends Component {
                 <tr>
                   <td>Percentage</td>
                   <td>100%</td>
-                  <td>30%</td>
+                  <td>{playerDetail.rakebackPercentage}%</td>
                 </tr>
                 <tr>
                   <td>Total Winnings and Rakeback</td>
                   <td>{playerDetail.winnings}</td>
-                  <td></td>
+                  <td>{parseInt(playerDetail.rake) * parseInt(playerDetail.rakebackPercentage) / 100}</td>
                 </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-auto">
-              { this.renderTotalOwed() }
-            </div>
-            <div className="col-auto">
-              { this.renderTotalRaked() }
             </div>
           </div>
         </div>
       )
     } else {
       return (
-        <Loader
-          type="TailSpin"
-          height={200}
-          width={200}
-          color="#fff"/>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-auto">
+              <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={2000} //3 secs
+
+              />
+            </div>
+          </div>
+        </div>
       )
     }
 

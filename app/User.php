@@ -54,8 +54,8 @@ class User extends Authenticatable
 
     public static function loadAllPlayers()
     {
-        return static::latest()
-            ->where('type', 2)
+        return static::where('type', 2)
+            ->with('player')
             ->paginate();
     }
 

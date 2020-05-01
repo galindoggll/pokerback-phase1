@@ -1,7 +1,11 @@
 export const PLAYER_LIST = 'PLAYER_LIST'
 export const PLAYER_DETAIL = 'PLAYER_DETAIL'
+export const PLAYER_UPDATE = 'PLAYER_UPDATE'
+export const IMPORT_DATA = 'IMPORT_DATA'
 
 export default {
   PLAYER_LIST,
   PLAYER_DETAIL,
+  PLAYER_UPDATE,
+  IMPORT_DATA,
 }

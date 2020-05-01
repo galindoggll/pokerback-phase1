@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Detail;
 use App\Http\Controllers\Controller;
-use App\Imports\DetailsImport;
+use App\Imports\PlayerDataImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -35,6 +35,6 @@ class DetailController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new DetailsImport, $request->file('file'));
+        Excel::import(new PlayerDataImport, $request->file('file'));
     }
 }

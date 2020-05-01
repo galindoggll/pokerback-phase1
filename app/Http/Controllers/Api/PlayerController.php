@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Player;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use App\Http\Requests\ArticleRequest;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use App\Imports\PlayerDataImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PlayerController extends Controller
 {
@@ -20,23 +19,17 @@ class PlayerController extends Controller
         return response([$players], 200);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return LengthAwarePaginator|mixed
-     */
+    public function show($id)
+    {
+        $player = Player::with('user')->findOrFail($id);
+        return $player;
+    }
+
     public function index()
     {
         return Player::with('user')->get();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @param $id
-     * @return LengthAwarePaginator|mixed
-     */
     public function assignPlayers(Request $request)
     {
         $ids = $request->all();
@@ -52,22 +45,16 @@ class PlayerController extends Controller
         return response()->json(['success'], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $player = Player::findOrFail($id);
+        $requestPlayer = $request->all();
 
-        $data['rakeback_percentage'] = $request['rakeback_percentage'];
-        $data['super_agent_percentage'] = $request['super_agent_percentage'];
-        $data['agent_perccentage'] = $request['agent_perccentage'];
-        $data['player_percentage'] = $request['player_percentage'];
-        $player->update($data);
+        $player = Player::findOrFail($requestPlayer['player']);
+        $player->rakeback_percentage = isset($requestPlayer['rakebackPercentage']) ? $requestPlayer['rakebackPercentage'] : $player->rakeback_percentage;
+        $player->super_agent_percentage = isset($requestPlayer['superAgentPercentage']) ? $requestPlayer['superAgentPercentage'] : $player->super_agent_percentage;
+        $player->agent_percentage = isset($requestPlayer['agentPercentage']) ? $requestPlayer['agentPercentage'] : $player->agent_percentage;
+        $player->player_percentage = isset($requestPlayer['playerPercentage']) ? $requestPlayer['playerPercentage'] : $player->player_percentage;
+        $player->save();
 
         return response()->json($player, 200);
     }
@@ -81,5 +68,11 @@ class PlayerController extends Controller
     public function delete($id)
     {
 
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new PlayerDataImport, $request->file('file'));
+        return response()->json('success', 200);
     }
 }

@@ -3,13 +3,14 @@
 namespace App\Imports;
 
 use App\Detail;
+use App\Player;
 use App\User;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class DetailsImport implements ToCollection, WithHeadingRow, WithStartRow
+class PlayerDataImport implements ToCollection, WithHeadingRow, WithStartRow
 {
     /**
      * @param Collection $collection
@@ -19,11 +20,9 @@ class DetailsImport implements ToCollection, WithHeadingRow, WithStartRow
 
         foreach ($collection as $row) {
             if (!empty($row['player_id']) && !empty($row['winnings'])) {
-                Detail::updateOrCreate(
-                    ['player_id' => $row['player_id']],
+                Player::updateOrCreate(
+                    ['playing_id' => $row['player_id']],
                     [
-                        'player_id' => $row['player_id'],
-                        'region' => $row['countryregion'],
                         'nickname' => $row['nickname'],
                         'memoname' => $row['memoname'],
                         'winnings' => $row['winnings'],

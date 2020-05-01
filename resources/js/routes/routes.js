@@ -6,4 +6,4 @@ import articleRoutes from "../modules/article/routes"
 import playerRoutes from "../modules/players/routes"
 import agentRoutes from "../modules/agent/routes"
 
-export default [...webRoutes, ...authRoutes, ...userRoutes, ...articleRoutes, ...agentRoutes]
+export default [...webRoutes, ...authRoutes, ...userRoutes, ...articleRoutes, ...agentRoutes, ...playerRoutes]
