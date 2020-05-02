@@ -3,6 +3,7 @@ import {
   PLAYER_DETAIL,
   PLAYER_UPDATE,
   IMPORT_DATA,
+  AGENT_PLAYER_LIST,
 } from './action-types'
 
 const initialState = {
@@ -29,6 +30,8 @@ const reducer = (state = initialState, { type, payload = null }) => {
       return update(state, payload)
     case IMPORT_DATA:
       return importData(state)
+    case AGENT_PLAYER_LIST:
+      return agentPlayersList(state, payload)
     default:
       return state
   }
@@ -57,6 +60,13 @@ function update(state, payload) {
 function importData(state) {
   return Object.assign({}, state, {
     ...state,
+  });
+}
+
+function agentPlayersList(state, payload) {
+  return Object.assign({}, state, {
+    ...state,
+    agentPlayerList: payload
   });
 }
 

@@ -11,6 +11,7 @@ import {
   PLAYER_DETAIL,
   PLAYER_UPDATE,
   IMPORT_DATA,
+  AGENT_PLAYER_LIST,
 } from './action-types';
 
 export function list(payload) {
@@ -37,5 +38,12 @@ export function update(payload) {
 export function importData() {
   return {
     type: IMPORT_DATA
+  }
+}
+
+export function agentPlayerList(payload) {
+  return {
+    type: AGENT_PLAYER_LIST,
+    payload
   }
 }

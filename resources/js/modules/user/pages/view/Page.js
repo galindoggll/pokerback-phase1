@@ -21,81 +21,91 @@ class Page extends Component {
 
   renderInfo() {
     const {user} = this.props
-    if (user.type === 2) {
-      return this.props.user.info.map(function (info) {
-        return (
-          <div>
-            <hr className="mb-4"/>
-            <div className="col-md-12 order-md-1">
-              <h4 className="mb-3">Agent</h4>
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label>Name</label>
-                  <div className="form-control">{info.agent.user.name}</div>
-                </div>
-              </div>
+    if (user.type === 2 && user.info.info) {
+      return (
+        <div className="text-center">
+          <div className="mt-lg-5 card box-shadow">
+            <div className="card-header">
+              <h4 className="my-0 font-weight-normal">Agent</h4>
             </div>
-          </div>
-        )
-      })
-    }
-
-    if (user.type === 1) {
-      return this.props.user.info.map(function (info) {
-        return (
-          <div>
-            <hr className="mb-4"/>
-            <div className="col-md-6 order-md-1">
-              <h4 className="mb-3">Players</h4>
-              <ul className="list-group">
-                {
-                  info.userPlayer.map(function (user) {
-                    return <li key={user.id} className="list-group-item">{user.name}</li>
-                  })
-                }
+            <div className="card-body">
+              <ul className="list-unstyled mt-3 mb-4">
+                <li>{user.info.info[0].agent.user.name}</li>
+                <li>{user.info.info[0].agent.user.email}</li>
+                <li>{user.info.info[0].agent.user.phone}</li>
               </ul>
             </div>
           </div>
-        )
-      })
+        </div>
+      )
+    }
+
+    if (user.type === 1 && user.info.info) {
+      return (
+        <div className="order-md-1">
+          <h4 className="mb-3">Players</h4>
+          <table className="table table-responsive table-striped">
+            <thead className="thead-inverse">
+            <tr>
+              <th>Player ID</th>
+              <th>Nickname</th>
+              <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {
+              user.info.info[0].player.map((player, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{player.playingId}</td>
+                    <td>{player.nickname}</td>
+                    <td>{player.user.email}</td>
+                  </tr>)
+              })
+            }
+            </tbody>
+          </table>
+        </div>
+      )
     }
   }
 
   render() {
     const {user} = this.props
-    return (
-      <div className="container">
-        <div className="col-md-12 order-md-1">
-          <h4 className="mb-3">Profile</h4>
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label>Username</label>
-              <div className="form-control">{user.name}</div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label>Email</label>
-              <div className="form-control">{user.email}</div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label>Phone</label>
-              <div className="form-control">{user.phone}</div>
-            </div>
-            <div className="col-md-3 mb-3 align-self-end">
-              <a className="btn btn-sm btn-primary btn-block"
-                 href={`profile/edit/${user.id}`}>
-                Edit Profile
-              </a>
+    if (user) {
+      return (
+        <div className="container">
+          <div className="col-md-12 order-md-1">
+            <div className="row">
+              <div className="col-md-6">
+                <h4 className="mb-3">Profile</h4>
+                <div className="mb-3">
+                  <label>Username</label>
+                  <div className="form-control">{user.name}</div>
+                </div>
+                <div className="mb-3">
+                  <label>Email</label>
+                  <div className="form-control">{user.email}</div>
+                </div>
+                <div className="mb-3">
+                  <label>Phone</label>
+                  <div className="form-control">{user.phone}</div>
+                  {/*<div className="col-md-3 mb-3 align-self-end">*/}
+                  {/*<a className="btn btn-sm btn-primary btn-block"*/}
+                  {/*href={`profile/edit/${user.id}`}>*/}
+                  {/*Edit Profile*/}
+                  {/*</a>*/}
+                  {/*</div>*/}
+                </div>
+              </div>
+              <div className="col-md-6">
+                {this.renderInfo()}
+              </div>
             </div>
           </div>
         </div>
-        {this.renderInfo()}
-      </div>
-    )
-
+      )
+    }
   }
 }
 

@@ -56,7 +56,6 @@ class AssignPlayerModal extends Component {
   }
 
   render() {
-    console.log(this.props)
     const {openAssignPlayersModal, closeAssignPlayersModal, agents} = this.props;
     if (agents.unassignedList) {
       return (

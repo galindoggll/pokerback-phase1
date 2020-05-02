@@ -116,7 +116,7 @@ class Page extends Component {
                       <td>{player.player[0].winnings}</td>
                       <td>{player.player[0].rake}</td>
                       <td>
-                        <Link to={`players/view-report/${player.player[0].id}`} className="btn btn-primary">View Report</Link>
+                        <Link to={`players/view-report/${player.player[0].id}/0`} className="btn btn-primary">View Report</Link>
                       </td>
                       <td>
                         <Link to={`players/set-percentage/${player.player[0].id}`} className="btn btn-info">Set Percentage</Link>

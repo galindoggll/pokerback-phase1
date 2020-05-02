@@ -19,8 +19,11 @@ class PlayerController extends Controller
         return response([$players], 200);
     }
 
-    public function show($id)
+    public function show($id, $type)
     {
+        if ($type == 2) {
+            return Player::where('user_id', $id)->with('user')->first();
+        }
         $player = Player::with('user')->findOrFail($id);
         return $player;
     }

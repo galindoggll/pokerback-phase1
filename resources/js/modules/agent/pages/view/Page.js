@@ -6,7 +6,6 @@ import Loader from 'react-loader-spinner'
 import {agentDetails, unassignedPlayers} from '../../service'
 
 // import components
-import {Link} from 'react-router-dom'
 import AssignPlayerModal from "./components/AssignPlayerModal";
 
 class Page extends Component {
@@ -27,7 +26,7 @@ class Page extends Component {
     this.setToggleAssignPlayerModal = this.setToggleAssignPlayerModal.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(agentDetails(this.props.match.params));
   }
 
@@ -41,8 +40,22 @@ class Page extends Component {
   }
 
   render() {
-    let {userAgent, agent, playerList} = this.props.agent
-    if (userAgent) {
+    let {userAgent, agent} = this.props.agent
+    if (!userAgent) {
+      return <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-auto">
+            <Loader
+              type="Puff"
+              color="#00BFFF"
+              height={100}
+              width={100}
+              timeout={2000} //3 secs
+            />
+          </div>
+        </div>
+      </div>
+    } else {
       return (
         <div className="container">
           <div className="row">
@@ -76,15 +89,37 @@ class Page extends Component {
             <div className="col-md-6">
               <h4 className="">Assigned Players</h4>
               <div className="row">
-                <ul className="list-group col-md-7 ml-3">
+                <table className="table table-responsive table-striped">
+                  <thead className="thead-inverse">
+                  <tr>
+                    <th>Player ID</th>
+                    <th>Nickname</th>
+                    <th>Email</th>
+                  </tr>
+                  </thead>
+                  <tbody>
                   {
-                    playerList.length > 0 &&
-                    playerList.map(function (player, index) {
-                      return <li key={index} className="list-group-item">{player.username}</li>
+                    agent.player.length > 0 &&
+                    agent.player.map((player, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{player.playingId}</td>
+                          <td>{player.nickname}</td>
+                          <td>{player.user.email}</td>
+                        </tr>)
                     })
                   }
                   {
-                    playerList.length === 0 &&
+                    agent.player.length === 0 &&
+                    <tr>
+                      <td cols="3">No Players Assigned</td>
+                    </tr>
+                  }
+                  </tbody>
+                </table>
+                <ul className="list-group col-md-7 ml-3">
+                  {
+                    agent.player.length === 0 &&
                     <li className="list-group-item">No Players Assigned</li>
                   }
                 </ul>
@@ -106,21 +141,6 @@ class Page extends Component {
           />
         </div>
       )
-    } else {
-      return <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-auto">
-            <Loader
-              type="Puff"
-              color="#00BFFF"
-              height={100}
-              width={100}
-              timeout={2000} //3 secs
-
-            />
-          </div>
-        </div>
-      </div>
     }
   }
 }

@@ -47,7 +47,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $info = "";
         if ($user['type'] === 1) {
-            $info = Agent::where('user_id', $user['id'])->with('userPlayer')->get();
+            $info = Agent::where('user_id', $user['id'])->with('player.user')->get();
         }
 
         if ($user['type'] === 2) {

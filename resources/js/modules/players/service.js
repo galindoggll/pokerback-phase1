@@ -29,7 +29,7 @@ export function playerListRequest({pageNumber = 1, url = '/players'}) {
 
 export function playerDetailRequest(player) {
   return dispatch => {
-    Http.get('/player/'+ player.id)
+    Http.get('/player/'+ player.id + '/' + player.type)
       .then((res) => {
         dispatch(playerActions.detail(transformResponse(res.data)))
       })
@@ -77,6 +77,19 @@ export function importData(params) {
     Http.post('/import', params)
       .then((res) => {
         dispatch(playerActions.importData(transformResponse(res.data)))
+      })
+      .catch((err) => {
+        // TODO: handle err
+        console.error(err.response)
+      })
+  }
+}
+
+export function playerListOfAgentRequest(params) {
+  return dispatch => {
+    Http.get('/agent/players/' + params.id)
+      .then((res) => {
+        dispatch(playerActions.agentPlayerList(transformResponse(res.data)))
       })
       .catch((err) => {
         // TODO: handle err

@@ -33,7 +33,7 @@ class PrivateHeader extends Component {
       return (
         <nav className="my-2 my-md-0 mr-md-3">
           <a className="p-2 text-dark" href="/">Home</a>
-          <a className="p-2 text-dark" href="/players">Players</a>
+          <a className="p-2 text-dark" href={`/players/agent-list/${user.id}`}>Players</a>
           <a className="p-2 text-dark" href={`profile/${user.id}`}>Profile</a>
         </nav>)
     }
@@ -41,7 +41,7 @@ class PrivateHeader extends Component {
       return (
         <nav className="my-2 my-md-0 mr-md-3">
           <a className="p-2 text-dark" href="/">Home</a>
-          <a className="p-2 text-dark" href="/players">Report</a>
+          <a className="p-2 text-dark" href={`/players/view-report/${user.id}/${user.type}`}>Report</a>
           <a className="p-2 text-dark" href={`profile/${user.id}`}>Profile</a>
         </nav>)
     }

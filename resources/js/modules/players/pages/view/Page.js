@@ -32,12 +32,29 @@ class Page extends Component {
 
   render() {
     const { playerDetail } = this.props.players
-    if (playerDetail) {
+    if (!playerDetail) {
+      return (
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-auto">
+              <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={2000} //3 secs
+
+              />
+            </div>
+          </div>
+        </div>
+      )
+    } else {
       return (
         <div className="container">
           <div className="row">
             <div className="col-auto">
-              <h3>Player Details</h3>
+              <h3>Player Report</h3>
               <table className="table table-responsive table-striped">
                 <thead className="thead-inverse">
                 <tr>
@@ -82,23 +99,6 @@ class Page extends Component {
                 </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-auto">
-              <Loader
-                type="Puff"
-                color="#00BFFF"
-                height={100}
-                width={100}
-                timeout={2000} //3 secs
-
-              />
             </div>
           </div>
         </div>
