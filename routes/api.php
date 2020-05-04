@@ -17,15 +17,19 @@ use Illuminate\Support\Facades\Route;
 $api_version = config('api.api_version');
 
 Route::group(["prefix" => "{$api_version}"], function() {
-    Route::get('info/{id}', 'UserController@show');
-    Route::get('players-unassigned/', 'PlayerController@showPlayersNotAssigned');
-    Route::post('assign-players/', 'PlayerController@assignPlayers');
-    Route::get('agents/', 'UserController@showAllAgents');
-    Route::get('players/', 'UserController@showAllPlayers');
-    Route::get('player/{id}/{type}', 'PlayerController@show');
-    Route::post('update-player/', 'PlayerController@update');
-    Route::post('import/', 'PlayerController@import');
-    Route::get('agent/players/{id}', 'AgentController@showAllPlayers');
+
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('info/{id}', 'UserController@show');
+        Route::get('players-unassigned/', 'PlayerController@showPlayersNotAssigned');
+        Route::post('assign-players/', 'PlayerController@assignPlayers');
+        Route::get('agents/', 'UserController@showAllAgents');
+        Route::get('players/', 'UserController@showAllPlayers');
+        Route::get('player/{id}/{type}', 'PlayerController@show');
+        Route::post('update-player/', 'PlayerController@update');
+        Route::post('import/', 'PlayerController@import');
+        Route::get('agent/players/{id}', 'AgentController@showAllPlayers');
+    });
+
     // register auth routes
     Route::prefix('auth')
         ->group(base_path('routes/api/auth.php'));
@@ -39,6 +43,3 @@ Route::group(["prefix" => "{$api_version}"], function() {
 Route::get('agent', 'AgentController@index');
 Route::get('player', 'PlayerController@index');
 
-Route::group(['middleware' => 'auth:api'], function() {
-
-});
