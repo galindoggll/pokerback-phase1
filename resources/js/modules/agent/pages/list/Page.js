@@ -7,7 +7,6 @@ import {agentListRequest} from '../../service'
 
 // import components
 import {Link} from 'react-router-dom'
-import Pagination from './../../../article/pages/list/components/Pagination'
 
 
 class Page extends Component {
@@ -20,18 +19,12 @@ class Page extends Component {
 
   constructor(props) {
     super(props)
-
-    this.pageChange = this.pageChange.bind(this)
   }
 
   UNSAFE_componentWillMount() {
     const {dispatch} = this.props
 
     dispatch(agentListRequest({}))
-  }
-
-  pageChange(pageNumber) {
-    this.props.dispatch(agentListRequest({pageNumber}))
   }
 
   render() {
@@ -69,7 +62,6 @@ class Page extends Component {
                 }
                 </tbody>
               </table>
-              <Pagination meta={this.props.meta} onChange={this.pageChange}/>
             </div>
           </div>
         </div>

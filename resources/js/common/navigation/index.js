@@ -43,7 +43,6 @@ class Navigation extends Component {
   }
   
   logout(e) {
-    console.log('we');
     e.preventDefault()
 
     this.props.dispatch(logout())

@@ -20,14 +20,17 @@ class PlayerDataImport implements ToCollection, WithHeadingRow, WithStartRow
 
         foreach ($collection as $row) {
             if (!empty($row['player_id']) && !empty($row['winnings'])) {
-                Player::updateOrCreate(
-                    ['playing_id' => $row['player_id']],
-                    [
-                        'nickname' => $row['nickname'],
-                        'memoname' => $row['memoname'],
-                        'winnings' => $row['winnings'],
-                        'rake' => $row['rake'],
-                    ]);
+                $player = Player::where('playing_id', $row['player_id'])->first();
+                if (isset($player)) {
+                    Player::updateOrCreate(
+                        ['playing_id' => $row['player_id']],
+                        [
+                            'nickname' => $row['nickname'],
+                            'memoname' => $row['memoname'],
+                            'winnings' => $row['winnings'],
+                            'rake' => $row['rake'],
+                        ]);
+                }
             }
         }
     }

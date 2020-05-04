@@ -5,7 +5,6 @@ import {playerListRequest, importData} from '../../service'
 
 // import components
 import {Link} from 'react-router-dom'
-import Pagination from './../../../article/pages/list/components/Pagination'
 import Loader from 'react-loader-spinner'
 
 class Page extends Component {
@@ -27,7 +26,6 @@ class Page extends Component {
       data:{},
       loading: this.props.isExtracted,
     }
-    this.pageChange = this.pageChange.bind(this)
     this.handleOnChange = this.handleOnChange.bind(this)
     this.createFile = this.createFile.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -41,10 +39,6 @@ class Page extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.dispatch(playerListRequest({}))
-  }
-
-  pageChange(pageNumber) {
-    this.props.dispatch(playerListRequest({pageNumber}))
   }
 
   handleSubmit(e) {
@@ -126,7 +120,6 @@ class Page extends Component {
               }
               </tbody>
             </table>
-            <Pagination meta={this.props.meta} onChange={this.pageChange}/>
           </div>
         </div>
         <hr/>
