@@ -21,7 +21,7 @@ class Page extends Component {
 
   renderInfo() {
     const {user} = this.props
-    if (user.type === 2 && user.info.info) {
+    if (user.type == 2 && user.info.info) {
       return (
         <div className="text-center">
           <div className="mt-lg-5 card box-shadow">
@@ -40,7 +40,7 @@ class Page extends Component {
       )
     }
 
-    if (user.type === 1 && user.info.info) {
+    if (user.type == 1 && user.info.info) {
       return (
         <div className="order-md-1">
           <h4 className="mb-3">Players</h4>

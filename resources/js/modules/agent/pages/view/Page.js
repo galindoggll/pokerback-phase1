@@ -41,7 +41,7 @@ class Page extends Component {
 
   render() {
     let {userAgent, agent} = this.props.agent
-    if (!userAgent) {
+    if (!userAgent && !agent) {
       return <div className="container">
         <div className="row justify-content-center">
           <div className="col-auto">
@@ -110,19 +110,13 @@ class Page extends Component {
                     })
                   }
                   {
-                    agent.player.length === 0 &&
+                    agent.player.length == 0 &&
                     <tr>
-                      <td cols="3">No Players Assigned</td>
+                      <td colspan="3">No Players Assigned</td>
                     </tr>
                   }
                   </tbody>
                 </table>
-                <ul className="list-group col-md-7 ml-3">
-                  {
-                    agent.player.length === 0 &&
-                    <li className="list-group-item">No Players Assigned</li>
-                  }
-                </ul>
               </div>
               <div className="row">
                 <div className="col-md-8 mb-3 mt-3">
