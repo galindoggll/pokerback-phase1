@@ -83,6 +83,7 @@ class RegisterController extends Controller
             $playerId = $this->generatePlayerId();
             Player::create([
                 'user_id' => $user->id,
+                'agent_id' => 0,
                 'playing_id' => $playerId,
             ]);
         }
