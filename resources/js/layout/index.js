@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { logout } from '../modules/auth/service'
 
 // import services actions
 import { fetchUser } from '../modules/auth/service'
@@ -20,6 +21,12 @@ class Layout extends Component {
     dispatch: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+
+    this.logout = this.logout.bind(this);
+  }
+
   UNSAFE_componentWillMount() {
     const { isAuthenticated, user } = this.props
     if (isAuthenticated && !user.id) {
@@ -28,10 +35,16 @@ class Layout extends Component {
 
   }
 
+  logout(e) {
+    e.preventDefault()
+
+    this.props.dispatch(logout())
+  }
+
   render() {
     const { children, ...props } = this.props
     if (this.props.isAuthenticated) {
-      return <PrivateLayout {...props}>{children}</PrivateLayout>
+      return <PrivateLayout props={this.props} logout={this.logout}>{children}</PrivateLayout>
     }
     return <PublicLayout {...props}>{children}</PublicLayout>
   }
