@@ -40,7 +40,8 @@ class Page extends Component {
   }
 
   render() {
-    let {userAgent, agent} = this.props.agent
+    const {userAgent, agent} = this.props.agent
+
     if (!userAgent && !agent) {
       return <div className="container">
         <div className="row justify-content-center">
@@ -99,7 +100,7 @@ class Page extends Component {
                   </thead>
                   <tbody>
                   {
-                    agent.player.length > 0 &&
+                    agent.player && agent.player.length > 0 &&
                     agent.player.map((player, i) => {
                       return (
                         <tr key={i}>
@@ -110,7 +111,7 @@ class Page extends Component {
                     })
                   }
                   {
-                    agent.player.length == 0 &&
+                    agent.player && agent.player.length == 0 &&
                     <tr>
                       <td colspan="3">No Players Assigned</td>
                     </tr>
