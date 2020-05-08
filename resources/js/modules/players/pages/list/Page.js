@@ -23,7 +23,7 @@ class Page extends Component {
       modalId: null,
       fileName: 'Choose File',
       file: '',
-      data:{},
+      data: {},
       loading: this.props.isExtracted,
     }
     this.handleOnChange = this.handleOnChange.bind(this)
@@ -103,19 +103,29 @@ class Page extends Component {
               <tbody>
               {
                 players.map((player, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{player.player[0].playingId}</td>
-                      <td>{player.username}</td>
-                      <td>{player.player[0].winnings}</td>
-                      <td>{player.player[0].rake}</td>
-                      <td>
-                        <Link to={`players/view-report/${player.player[0].id}/0`} className="btn btn-primary">View Report</Link>
-                      </td>
-                      <td>
-                        <Link to={`players/set-percentage/${player.player[0].id}`} className="btn btn-info">Set Percentage</Link>
-                      </td>
-                    </tr>)
+                  if (player.player[0]) {
+                    return (
+                      <tr key={i}>
+                        <td>{player.player[0].playingId}</td>
+                        <td>{player.username}</td>
+                        <td>{player.player[0].winnings}</td>
+                        <td>{player.player[0].rake}</td>
+                        <td>
+                          <Link to={`players/view-report/${player.player[0].id}/0`} className="btn btn-primary">View
+                            Report</Link>
+                        </td>
+                        <td>
+                          <Link to={`players/set-percentage/${player.player[0].id}`} className="btn btn-info">Set
+                            Percentage</Link>
+                        </td>
+                      </tr>)
+                  } else {
+                    return (
+                      <tr>
+                        <td colspan={6}>No Players</td>
+                      </tr>
+                    )
+                  }
                 })
               }
               </tbody>
@@ -130,7 +140,7 @@ class Page extends Component {
           <div className="input-group col-md-6">
             <div className="custom-file">
               <input type="file" className="custom-file-input" onChange={e => this.handleOnChange(e)}/>
-                <label className="custom-file-label">{this.state.fileName}</label>
+              <label className="custom-file-label">{this.state.fileName}</label>
             </div>
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" onClick={this.handleSubmit}>Import Data</button>

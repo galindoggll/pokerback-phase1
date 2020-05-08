@@ -12,6 +12,7 @@ class Player extends Model
     protected $table = 'player';
 
     protected $fillable = [
+        'user_id',
         'agent_id',
         'playing_id',
         'memoname',

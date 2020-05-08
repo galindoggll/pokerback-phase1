@@ -10,13 +10,9 @@ function transformResponse(params) {
   return Transformer.fetch(params)
 }
 
-export function playerListRequest({pageNumber = 1, url = '/players'}) {
+export function playerListRequest() {
   return dispatch => {
-    if (pageNumber > 1) {
-      url = url + `?page=${pageNumber}`
-    }
-
-    Http.get(url)
+    Http.get('players/')
       .then((res) => {
         dispatch(playerActions.list(transformResponse(res.data)))
       })

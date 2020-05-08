@@ -49,15 +49,23 @@ class Page extends Component {
                 <tbody>
                 {
                   agents.map(function (agent, i) {
-                    return (
-                      <tr key={i}>
-                        <td>{i + 1}</td>
-                        <td>{agent.name}</td>
-                        <td>{agent.email}</td>
-                        <td>
-                          <Link to={`agent/${agent.id}`} className="btn btn-primary">View Agent</Link>
-                        </td>
-                      </tr>)
+                    if (agent) {
+                      return (
+                        <tr key={i}>
+                          <td>{i + 1}</td>
+                          <td>{agent.name}</td>
+                          <td>{agent.email}</td>
+                          <td>
+                            <Link to={`agent/${agent.id}`} className="btn btn-primary">View Agent</Link>
+                          </td>
+                        </tr>)
+                    } else {
+                      return (
+                        <tr>
+                          <td colspan={4}>No Agents</td>
+                        </tr>)
+                    }
+
                   })
                 }
                 </tbody>
