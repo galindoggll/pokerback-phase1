@@ -41,11 +41,15 @@ function list(state, payload) {
 }
 
 function detail(state, payload) {
+  let playerList = [];
+  if (payload.info[0].userPlayer) {
+    playerList = payload.info[0].userPlayer
+  }
   return Object.assign({}, state, {
     ...state,
     agent: payload.info[0],
     userAgent: payload.user,
-    playerList: payload.info[0].userPlayer,
+    playerList: playerList,
   });
 }
 
