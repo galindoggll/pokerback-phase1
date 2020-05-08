@@ -108,8 +108,8 @@ class Page extends Component {
                       <tr key={i}>
                         <td>{player.player[0].playingId}</td>
                         <td>{player.username}</td>
-                        <td>{player.player[0].winnings}</td>
-                        <td>{player.player[0].rake}</td>
+                        <td>{player.player[0].winnings || 0}</td>
+                        <td>{player.player[0].rake || 0}</td>
                         <td>
                           <Link to={`players/view-report/${player.player[0].id}/0`} className="btn btn-primary">View
                             Report</Link>

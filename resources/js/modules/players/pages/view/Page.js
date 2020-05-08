@@ -70,8 +70,8 @@ class Page extends Component {
                   <td>{playerDetail.playingId}</td>
                   <td>{playerDetail.nickname}</td>
                   <td>{playerDetail.memoname}</td>
-                  <td>{playerDetail.winnings}</td>
-                  <td>{playerDetail.rake}</td>
+                  <td>{playerDetail.winnings || 0}</td>
+                  <td>{playerDetail.rake || 0}</td>
                 </tr>
                 </tbody>
               </table>
@@ -84,8 +84,8 @@ class Page extends Component {
                 <tbody>
                 <tr>
                   <td>Total Winnings and Rake</td>
-                  <td>{playerDetail.winnings}</td>
-                  <td>{playerDetail.rake}</td>
+                  <td>{playerDetail.winnings || 0}</td>
+                  <td>{playerDetail.rake || 0}</td>
                 </tr>
                 <tr>
                   <td>Percentage</td>

@@ -52,8 +52,8 @@ class Page extends Component {
                       <tr key={i}>
                         <td>{player.playingId}</td>
                         <td>{player.nickname}</td>
-                        <td>{player.winnings}</td>
-                        <td>{player.rake}</td>
+                        <td>{player.winnings || 0}</td>
+                        <td>{player.rake || 0}</td>
                         <td>
                           <Link to={`/players/view-report/${player.id}/1`}
                                 replace={true}
