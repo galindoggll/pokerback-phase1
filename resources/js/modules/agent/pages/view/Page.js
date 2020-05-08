@@ -79,12 +79,12 @@ class Page extends Component {
                   <div className="form-control">{userAgent.phone}</div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-md-8 mb-3">
-                  <label>Rake Back</label>
-                  <div className="form-control">{agent.rakeback || 0}</div>
-                </div>
-              </div>
+              {/*<div className="row">*/}
+                {/*<div className="col-md-8 mb-3">*/}
+                  {/*<label>Rake Back</label>*/}
+                  {/*<div className="form-control">{agent.rakeback || '0'}</div>*/}
+                {/*</div>*/}
+              {/*</div>*/}
             </div>
             <div className="col-md-6">
               <h4 className="">Assigned Players</h4>
