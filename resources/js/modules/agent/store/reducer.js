@@ -42,8 +42,8 @@ function list(state, payload) {
 
 function detail(state, payload) {
   let playerList = [];
-  if (payload.info[0].userPlayer) {
-    playerList = payload.info[0].userPlayer
+  if (payload.info[0] && payload.info[0].player) {
+    playerList = payload.info[0].player
   }
   return Object.assign({}, state, {
     ...state,
