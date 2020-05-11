@@ -25,7 +25,7 @@ export function playerListRequest() {
 
 export function playerDetailRequest(player) {
   return dispatch => {
-    Http.get('/player/'+ player.id + '/' + player.type)
+    Http.get('/player/'+ parseInt(player.id) + '/' + parseInt(player.type))
       .then((res) => {
         dispatch(playerActions.detail(transformResponse(res.data)))
       })

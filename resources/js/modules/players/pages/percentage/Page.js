@@ -9,7 +9,7 @@ import Loader from "react-loader-spinner";
 // import components
 
 class Page extends Component {
-  static displayName = 'PlayerDetailsPage'
+  static displayName = 'PercentagePage'
   static propTypes = {
     match: PropTypes.object,
     dispatch: PropTypes.func,

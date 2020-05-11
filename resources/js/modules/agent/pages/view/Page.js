@@ -1,7 +1,7 @@
 // import libs
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import Loader from 'react-loader-spinner'
 import {agentDetails, unassignedPlayers} from '../../service'
 
@@ -39,9 +39,28 @@ class Page extends Component {
     this.setState({openAssignPlayersModal: false});
   }
 
+  renderPlayers() {
+    if (this.props.agent.agent.player.length > 0) {
+      return (
+        this.props.agent.agent.player.map((player, i) => {
+          return (
+            <tr key={i}>
+              <td>{player.playingId}</td>
+              <td>{player.nickname}</td>
+              <td>{player.user.email}</td>
+            </tr>)
+        })
+      )
+    } else {
+      return (
+        <tr>
+          <td colSpan="3">No Players Assigned</td>
+        </tr>)
+    }
+  }
+
   render() {
     const {userAgent, agent} = this.props.agent
-
     if (!userAgent && !agent) {
       return <div className="container">
         <div className="row justify-content-center">
@@ -80,12 +99,12 @@ class Page extends Component {
                   <div className="form-control">{userAgent.phone}</div>
                 </div>
               </div>
-              {/*<div className="row">*/}
-                {/*<div className="col-md-8 mb-3">*/}
-                  {/*<label>Rake Back</label>*/}
-                  {/*<div className="form-control">{agent.rakeback || '0'}</div>*/}
-                {/*</div>*/}
-              {/*</div>*/}
+              <div className="row">
+                <div className="col-md-8 mb-3">
+                  <label>Rake Back</label>
+                  <div className="form-control">{parseInt(agent.rakeback) || 0}</div>
+                </div>
+              </div>
             </div>
             <div className="col-md-6">
               <h4 className="">Assigned Players</h4>
@@ -99,23 +118,7 @@ class Page extends Component {
                   </tr>
                   </thead>
                   <tbody>
-                  {
-                    agent.player && agent.player.length > 0 &&
-                    agent.player.map((player, i) => {
-                      return (
-                        <tr key={i}>
-                          <td>{player.playingId}</td>
-                          <td>{player.nickname}</td>
-                          <td>{player.user.email}</td>
-                        </tr>)
-                    })
-                  }
-                  {
-                    agent.player && agent.player.length == 0 &&
-                    <tr>
-                      <td colspan="3">No Players Assigned</td>
-                    </tr>
-                  }
+                   {this.renderPlayers()}
                   </tbody>
                 </table>
               </div>

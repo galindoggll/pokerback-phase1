@@ -27,6 +27,30 @@ class Page extends Component {
     dispatch(agentListRequest({}))
   }
 
+  renderAgents() {
+    if (this.props.agents.length > 0) {
+      return (
+        this.props.agents.map(function (agent, i) {
+          return (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td>{agent.name}</td>
+              <td>{agent.email}</td>
+              <td>
+                <Link to={`agent/${agent.id}`} className="btn btn-primary">View Agent</Link>
+              </td>
+            </tr>)
+        })
+      )
+    } else {
+      return (
+        <tr>
+          <td colspan={4}>No Agents</td>
+        </tr>
+      )
+    }
+  }
+
   render() {
     const {agents} = this.props
     if (agents) {
@@ -37,7 +61,7 @@ class Page extends Component {
               <div className="row">
                 <div className="col"><h1>Agents</h1></div>
               </div>
-              <table className="table table-responsive table-striped">
+              <table className="table table-responsive table-striped table-responsive-lg">
                 <thead className="thead-inverse">
                 <tr>
                   <th>#</th>
@@ -47,27 +71,7 @@ class Page extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {
-                  agents.map(function (agent, i) {
-                    if (agent) {
-                      return (
-                        <tr key={i}>
-                          <td>{i + 1}</td>
-                          <td>{agent.name}</td>
-                          <td>{agent.email}</td>
-                          <td>
-                            <Link to={`agent/${agent.id}`} className="btn btn-primary">View Agent</Link>
-                          </td>
-                        </tr>)
-                    } else {
-                      return (
-                        <tr>
-                          <td colspan={4}>No Agents</td>
-                        </tr>)
-                    }
-
-                  })
-                }
+                {this.renderAgents()}
                 </tbody>
               </table>
             </div>

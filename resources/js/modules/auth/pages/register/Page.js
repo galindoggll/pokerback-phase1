@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import $ from 'jquery'
 import _ from 'lodash'
 import {Redirect} from 'react-router-dom'
-import {register} from '../../service'
+import {fetchUser, register} from '../../service'
 import ReeValidate from 'ree-validate'
 
 // import components
@@ -53,6 +53,7 @@ class Page extends Component {
 
   componentWillUnmount() {
     $('body').removeAttr('style')
+    this.props.dispatch(fetchUser())
   }
 
   // event to handle input change

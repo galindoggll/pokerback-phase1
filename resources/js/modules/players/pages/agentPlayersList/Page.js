@@ -8,10 +8,10 @@ import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 
 class Page extends Component {
-  static displayName = 'PlayersPage'
+  static displayName = 'AgentPlayersPage'
   static propTypes = {
     meta: PropTypes.object,
-    players: PropTypes.array,
+    players: PropTypes.array.isRequired,
     dispatch: PropTypes.func,
   }
 
@@ -23,6 +23,36 @@ class Page extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.dispatch(playerListOfAgentRequest(this.props.match.params))
+  }
+
+  renderPlayers() {
+    if (this.props.players.players.length > 0) {
+      return(
+        this.props.players.players.map((player, i) => {
+          return (
+            <tr key={i}>
+              <td>{player.playingId}</td>
+              <td>{player.nickname}</td>
+              <td>{player.winnings || 0}</td>
+              <td>{player.rake || 0}</td>
+              <td>
+                <Link to={`/players/view-report/${player.id}/1`}
+                      replace={true}
+                      className="btn btn-primary">
+                  View Report
+                </Link>
+              </td>
+            </tr>)
+        })
+      )
+    } else {
+      return(
+        <tr>
+          <td colspan={5}>No Players Assigned</td>
+        </tr>
+      )
+    }
+
   }
 
   render() {
@@ -42,28 +72,11 @@ class Page extends Component {
                   <th>Nickname</th>
                   <th>Winnings</th>
                   <th>Rake</th>
-                  <th colSpan={1}></th>
+                  <th colSpan={2}></th>
                 </tr>
                 </thead>
                 <tbody>
-                {
-                  players.players.map((player, i) => {
-                    return (
-                      <tr key={i}>
-                        <td>{player.playingId}</td>
-                        <td>{player.nickname}</td>
-                        <td>{player.winnings || 0}</td>
-                        <td>{player.rake || 0}</td>
-                        <td>
-                          <Link to={`/players/view-report/${player.id}/1`}
-                                replace={true}
-                                className="btn btn-primary">
-                            View Report
-                          </Link>
-                        </td>
-                      </tr>)
-                  })
-                }
+                {this.renderPlayers()}
                 </tbody>
               </table>
             </div>

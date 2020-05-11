@@ -2,7 +2,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {playerDetailRequest} from '../../service'
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 import Loader from "react-loader-spinner";
 
@@ -13,7 +12,8 @@ import TotalRaked from './components/TotalRaked'
 class Page extends Component {
   static displayName = 'PlayerDetailsPage'
   static propTypes = {
-    match: PropTypes.object,
+    params: PropTypes.object,
+    playerDetail: PropTypes.object,
     dispatch: PropTypes.func,
   }
 
@@ -26,13 +26,12 @@ class Page extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const {dispatch, match} = this.props
-    dispatch(playerDetailRequest(match.params))
+    const {dispatch, params} = this.props
+    dispatch(playerDetailRequest(params))
   }
 
   render() {
-    const { playerDetail } = this.props.players
-    if (!playerDetail) {
+    if (!this.props.playerDetail) {
       return (
         <div className="container">
           <div className="row justify-content-center">
@@ -50,6 +49,7 @@ class Page extends Component {
         </div>
       )
     } else {
+      const rakeback = parseInt(this.props.playerDetail.rake) * parseInt(this.props.playerDetail.rakebackPercentage) / 100;
       return (
         <div className="container">
           <div className="row">
@@ -67,11 +67,11 @@ class Page extends Component {
                 </thead>
                 <tbody>
                 <tr>
-                  <td>{playerDetail.playingId}</td>
-                  <td>{playerDetail.nickname}</td>
-                  <td>{playerDetail.memoname}</td>
-                  <td>{playerDetail.winnings || 0}</td>
-                  <td>{playerDetail.rake || 0}</td>
+                  <td>{this.props.playerDetail.playingId}</td>
+                  <td>{this.props.playerDetail.nickname}</td>
+                  <td>{this.props.playerDetail.memoname}</td>
+                  <td>{parseInt(this.props.playerDetail.winnings) || 0}</td>
+                  <td>{parseInt(this.props.playerDetail.rake) || 0}</td>
                 </tr>
                 </tbody>
               </table>
@@ -84,18 +84,18 @@ class Page extends Component {
                 <tbody>
                 <tr>
                   <td>Total Winnings and Rake</td>
-                  <td>{playerDetail.winnings || 0}</td>
-                  <td>{playerDetail.rake || 0}</td>
+                  <td>{parseInt(this.props.playerDetail.winnings) || 0}</td>
+                  <td>{parseInt(this.props.playerDetail.rake) || 0}</td>
                 </tr>
                 <tr>
                   <td>Percentage</td>
                   <td>100%</td>
-                  <td>{playerDetail.rakebackPercentage}%</td>
+                  <td>{parseInt(this.props.playerDetail.rakebackPercentage) || 0}%</td>
                 </tr>
                 <tr>
                   <td>Total Winnings and Rakeback</td>
-                  <td>{playerDetail.winnings}</td>
-                  <td>{parseInt(playerDetail.rake) * parseInt(playerDetail.rakebackPercentage) / 100}</td>
+                  <td>{parseInt(this.props.playerDetail.winnings) || 0}</td>
+                  <td>{rakeback}</td>
                 </tr>
                 </tbody>
               </table>
@@ -104,7 +104,6 @@ class Page extends Component {
         </div>
       )
     }
-
   }
 }
 
