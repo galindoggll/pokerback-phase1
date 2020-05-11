@@ -20,7 +20,7 @@ const propTypes = {
 
 function PrivateLayout({ children, props, logout }) {
   return <div>
-    /*Implement on top loading*/
+    {/*Implement on top loading*/}
     {/*<div style={containerStyle}>*/}
       {/*<Loader*/}
         {/*type="Puff"*/}
