@@ -133,12 +133,15 @@ class Page extends Component {
               </div>
             </div>
           </div>
-          <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
-                             closeAssignPlayersModal={this.setToggleAssignPlayerModal}
-                             unassignedList={this.props}
-                             userAgentId={userAgent.id}
-                             agentId={agent.id}
-          />
+          {
+            this.props.agent.agent && this.props.agent.userAgent &&
+            <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
+                               closeAssignPlayersModal={this.setToggleAssignPlayerModal}
+                               unassignedList={this.props}
+                               userAgentId={this.props.agent.userAgent.id}
+                               agentId={this.props.agent.agent.id}
+            />
+          }
         </div>
       )
     }
