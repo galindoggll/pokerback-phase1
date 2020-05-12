@@ -40,7 +40,7 @@ class Page extends Component {
   }
 
   renderPlayers() {
-    if (this.props.agent.agent.player.length > 0) {
+    if (this.props.agent.agent.player && this.props.agent.agent.player.length > 0) {
       return (
         this.props.agent.agent.player.map((player, i) => {
           return (
@@ -118,7 +118,9 @@ class Page extends Component {
                   </tr>
                   </thead>
                   <tbody>
-                   {this.renderPlayers()}
+                   {
+                     this.props.agent.agent && this.renderPlayers()
+                   }
                   </tbody>
                 </table>
               </div>

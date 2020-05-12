@@ -35,9 +35,10 @@ export function update(payload) {
   }
 }
 
-export function importData() {
+export function importData(payload) {
   return {
-    type: IMPORT_DATA
+    type: IMPORT_DATA,
+    payload
   }
 }
 

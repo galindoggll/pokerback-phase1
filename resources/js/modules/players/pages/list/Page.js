@@ -51,7 +51,6 @@ class Page extends Component {
     form.append('file', this.state.file)
     this.setState({isImported: true})
     this.props.dispatch(importData(form))
-    this.props.dispatch(playerListRequest())
   }
 
   handleOnChange(e) {

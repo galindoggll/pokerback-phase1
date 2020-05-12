@@ -29,7 +29,7 @@ const reducer = (state = initialState, { type, payload = null }) => {
     case PLAYER_UPDATE:
       return update(state, payload)
     case IMPORT_DATA:
-      return importData(state)
+      return importData(state, payload)
     case AGENT_PLAYER_LIST:
       return agentPlayersList(state, payload)
     default:
@@ -57,9 +57,10 @@ function update(state, payload) {
   });
 }
 
-function importData(state) {
+function importData(state, payload) {
   return Object.assign({}, state, {
     ...state,
+    data: payload.data
   });
 }
 

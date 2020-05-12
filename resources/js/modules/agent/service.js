@@ -29,7 +29,7 @@ export function agentListRequest({pageNumber = 1, url = '/agents'}) {
 
 export function agentDetails(id) {
   return dispatch => {
-    Http.get('/info/'+ id.id)
+    Http.get('/info/'+ parseInt(id.id))
       .then((res) => {
         dispatch(agentActions.detail(transformResponse(res.data)))
       })

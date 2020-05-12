@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Player;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Imports\PlayerDataImport;
@@ -79,7 +80,6 @@ class PlayerController extends Controller
     public function import(Request $request)
     {
         Excel::import(new PlayerDataImport, $request->file('file'));
-
-        return response()->json('success', 200);
+        return User::loadAllPlayers();
     }
 }
