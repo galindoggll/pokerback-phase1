@@ -22,6 +22,7 @@ Route::group(["prefix" => "{$api_version}"], function() {
         Route::get('info/{id}', 'UserController@show');
         Route::get('players-unassigned/', 'PlayerController@showPlayersNotAssigned');
         Route::post('assign-players/', 'PlayerController@assignPlayers');
+        Route::post('unassign-player/', 'PlayerController@unassignPlayer');
         Route::get('agents/', 'UserController@showAllAgents');
         Route::get('players/', 'UserController@showAllPlayers');
         Route::get('player/{id}/{type}', 'PlayerController@show');

@@ -84,3 +84,35 @@ export function assignPlayers(params) {
     })
   )
 }
+
+export function unassignPlayer(params) {
+  return dispatch => (
+    new Promise((resolve, reject) => {
+      Http.post('/unassign-player', params)
+        .then(res => {
+          dispatch(agentActions.unassignPlayer(transformResponse(res.data)))
+          return resolve()
+        })
+        .catch((err) => {
+          const statusCode = err.response.status;
+          const data = {
+            error: null,
+            statusCode,
+          };
+
+          if (statusCode === 422) {
+            const resetErrors = {
+              errors: err.response.data,
+              replace: false,
+              searchStr: '',
+              replaceStr: '',
+            };
+            data.error = Transformer.resetValidationFields(resetErrors);
+          } else if (statusCode === 401) {
+            data.error = err.response.data.message;
+          }
+          return reject(data);
+        })
+    })
+  )
+}

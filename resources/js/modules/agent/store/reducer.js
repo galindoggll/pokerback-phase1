@@ -3,6 +3,7 @@ import {
   AGENT_DETAIL,
   ASSIGN_PLAYERS,
   PLAYERS_LIST,
+  UNASSIGN_PLAYER,
 } from './action-types'
 
 const initialState = {
@@ -20,7 +21,7 @@ const initialState = {
   total: 0,
   userAgent: {},
   playerList: [],
-  unassignedList: [],
+  unassignedList: {},
 }
 
 const reducer = (state = initialState, { type, payload = null }) => {
@@ -33,6 +34,8 @@ const reducer = (state = initialState, { type, payload = null }) => {
       return assignPlayers(state, payload)
     case PLAYERS_LIST:
       return playersList(state, payload)
+    case UNASSIGN_PLAYER:
+      return unassignPlayer(state, payload)
     default:
       return state
   }
@@ -65,7 +68,6 @@ function playersList(state, payload) {
 }
 
 function assignPlayers(state, payload) {
-  console.log(payload);
   let playerList = [];
   if (payload.info[0] && payload.info[0].player) {
     playerList = payload.info[0].player
@@ -74,6 +76,20 @@ function assignPlayers(state, payload) {
     ...state,
     agent: payload.info[0],
     playerList: playerList,
+    unassignedList: payload.players
+  });
+}
+
+function unassignPlayer(state, payload) {
+  let playerList = [];
+  if (payload.info[0] && payload.info[0].player) {
+    playerList = payload.info[0].player
+  }
+  return Object.assign({}, state, {
+    ...state,
+    agent: payload.info[0],
+    playerList: playerList,
+    unassignedList: payload.players
   });
 }
 

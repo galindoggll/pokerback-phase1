@@ -52,7 +52,30 @@ class PlayerController extends Controller
 
         $info = Agent::where('id', $ids['agent'])->with('player.user')->get();
 
-        return response()->json(["info" => $info], 200);
+        $players = Player::query()
+            ->where('agent_id', 0)
+            ->with('user')
+            ->get();
+
+        return response()->json(["info" => $info, "players" => $players], 200);
+    }
+
+    public function unassignPlayer(Request $request)
+    {
+        $id = $request->all();
+        $player = Player::findOrFail($id['player']);
+
+        $player->agent_id = 0;
+        $player->save();
+
+        $info = Agent::where('id', $id['agent'])->with('player.user')->get();
+
+        $players = Player::query()
+            ->where('agent_id', 0)
+            ->with('user')
+            ->get();
+
+        return response()->json(["info" => $info, "players" => $players], 200);
     }
 
     public function update(Request $request)

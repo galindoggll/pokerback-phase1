@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
-import {Modal, Button, Table} from "react-bootstrap";
+import _ from 'lodash'
 
 const displayName = 'AssignPlayerModal'
 const propTypes = {
@@ -17,27 +16,25 @@ const propTypes = {
 }
 
 const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, unassignedList, userAgentId, agentId, checked, handleSaveAssignment, handleSelect, checkedItems}) => (
-  <Modal animation={false} show={openAssignPlayersModal} onHide={closeAssignPlayersModal}>
-    <Modal.Header closeButton>
-      <Modal.Title>Assign Players</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      <Table striped bordered hover size="sm">
+  <div className="col-md-12">
+    <h4 className="">Unassigned Players</h4>
+    <div className="row">
+      <table className="table table-responsive table-striped">
         <thead>
         <tr>
           <th>Player ID</th>
-          <th>Username</th>
+          <th>Nickname</th>
           <th>Assign To Agent</th>
         </tr>
         </thead>
         <tbody>
         {
-          unassignedList.length > 0 &&
+          !_.isEmpty(unassignedList) &&
           unassignedList.map((agent, i) => {
             return (
               <tr key={i}>
                 <td>{agent.playingId}</td>
-                <td>{agent.user.username}</td>
+                <td>{agent.nickname}</td>
                 <td className="align-middle">
                   <input type="checkbox"
                          name={agent.id}
@@ -48,18 +45,23 @@ const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, una
               </tr>)
           })
         }
+        {
+          _.isEmpty(unassignedList) &&
+          <tr>
+            <td colspan={3}>No Unassigned Players</td>
+          </tr>
+        }
         </tbody>
-      </Table>
-    </Modal.Body>
-    <Modal.Footer>
-      <Button variant="primary" onClick={handleSaveAssignment}>
-        Save
-      </Button>
-      <Button variant="secondary" onClick={closeAssignPlayersModal}>
-        Close
-      </Button>
-    </Modal.Footer>
-  </Modal>
+      </table>
+    </div>
+    <div className="row">
+      <div className="col-md-8 mb-3 mt-3">
+        <button className="btn btn-info" onClick={handleSaveAssignment}>
+          Assign Player
+        </button>
+      </div>
+    </div>
+  </div>
 )
 
 AssignPlayerModal.displayName = displayName
