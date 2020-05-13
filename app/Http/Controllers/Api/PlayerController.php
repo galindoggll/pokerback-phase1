@@ -50,7 +50,6 @@ class PlayerController extends Controller
             }
         }
 
-
         $info = Agent::where('id', $ids['agent'])->with('player.user')->get();
 
         return response()->json(["info" => $info], 200);

@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {useHistory} from 'react-router-dom';
 import Loader from 'react-loader-spinner'
-import {agentDetails, unassignedPlayers} from '../../service'
+import {agentDetails, unassignedPlayers, assignPlayers} from '../../service'
 
 // import components
 import AssignPlayerModal from "./components/AssignPlayerModal";
@@ -14,6 +14,7 @@ class Page extends Component {
     match: PropTypes.object,
     agent: PropTypes.object,
     userAgent: PropTypes.object,
+    unassignedList: PropTypes.array,
     dispatch: PropTypes.func.isRequired,
   }
 
@@ -21,23 +22,47 @@ class Page extends Component {
     super(props)
     this.state = {
       openAssignPlayersModal: false,
+      checkedItems: new Map(),
+      checked: false,
     };
 
     this.handleOpenAssignPlayerModal = this.handleOpenAssignPlayerModal.bind(this);
     this.setToggleAssignPlayerModal = this.setToggleAssignPlayerModal.bind(this);
+    this.handleSaveAssignment = this.handleSaveAssignment.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentWillMount() {
     this.props.dispatch(agentDetails(this.props.match.params));
+    this.props.dispatch(unassignedPlayers(this.props.match.params));
   }
 
   handleOpenAssignPlayerModal() {
-    this.props.dispatch(unassignedPlayers(this.props.match.params));
+    //this.props.dispatch(unassignedPlayers(this.props.match.params));
     this.setState({openAssignPlayersModal: true});
   }
 
   setToggleAssignPlayerModal() {
     this.setState({openAssignPlayersModal: false});
+  }
+
+  handleSaveAssignment() {
+    let obj = Array.from(this.state.checkedItems).reduce((obj, [key, value]) => {
+      obj[key] = value;
+      return obj;
+    }, {});
+    let params = {};
+    params.players = obj;
+    params.agent = this.props.agent.id;
+    this.props.dispatch(assignPlayers(params));
+    //this.props.dispatch(agentDetails({id: this.props.userAgentId}));
+    this.setToggleAssignPlayerModal();
+  }
+
+  handleSelect(e) {
+    const item = e.target.name;
+    const isChecked = e.target.checked;
+    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
   }
 
   renderPlayers() {
@@ -61,6 +86,7 @@ class Page extends Component {
   }
 
   render() {
+    console.log(this.props.unassignedList)
     const {userAgent, agent} = this.props
     if (!userAgent && !agent) {
       return <div className="container">
@@ -138,9 +164,13 @@ class Page extends Component {
             this.props.agent && this.props.userAgent &&
             <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
                                closeAssignPlayersModal={this.setToggleAssignPlayerModal}
-                               unassignedList={this.props}
+                               unassignedList={this.props.unassignedList}
                                userAgentId={this.props.userAgent.id}
                                agentId={this.props.agent.id}
+                               checked={this.state.checked}
+                               handleSaveAssignment={this.handleSaveAssignment}
+                               handleSelect={this.handleSelect}
+                               checkedItems={this.state.checkedItems}
             />
           }
         </div>
