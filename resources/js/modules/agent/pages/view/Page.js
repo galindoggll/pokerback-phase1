@@ -62,7 +62,7 @@ class Page extends Component {
   handleSelect(e) {
     const item = e.target.name;
     const isChecked = e.target.checked;
-    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+    this.setState(prevState => ({checkedItems: prevState.checkedItems.set(item, isChecked)}));
   }
 
   renderPlayers() {
@@ -78,15 +78,13 @@ class Page extends Component {
         })
       )
     } else {
-      return (
-        <tr>
-          <td colSpan="3">No Players Assigned</td>
-        </tr>)
+      return <tr>
+        <td colSpan="3">No Players Assigned</td>
+      </tr>
     }
   }
 
   render() {
-    console.log(this.props.unassignedList)
     const {userAgent, agent} = this.props
     if (!userAgent && !agent) {
       return <div className="container">
@@ -127,10 +125,10 @@ class Page extends Component {
                 </div>
               </div>
               {/*<div className="row">*/}
-                {/*<div className="col-md-8 mb-3">*/}
-                  {/*<label>Rake Back</label>*/}
-                  {/*<div className="form-control">{parseInt(agent.rakeback) || 0}</div>*/}
-                {/*</div>*/}
+              {/*<div className="col-md-8 mb-3">*/}
+              {/*<label>Rake Back</label>*/}
+              {/*<div className="form-control">{parseInt(agent.rakeback) || 0}</div>*/}
+              {/*</div>*/}
               {/*</div>*/}
             </div>
             <div className="col-md-6">
@@ -145,9 +143,9 @@ class Page extends Component {
                   </tr>
                   </thead>
                   <tbody>
-                   {
-                     this.props.agent && this.renderPlayers()
-                   }
+                  {
+                    this.props.agent && this.renderPlayers()
+                  }
                   </tbody>
                 </table>
               </div>

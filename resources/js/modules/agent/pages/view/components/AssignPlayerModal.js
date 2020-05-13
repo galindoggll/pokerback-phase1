@@ -17,7 +17,7 @@ const propTypes = {
 }
 
 const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, unassignedList, userAgentId, agentId, checked, handleSaveAssignment, handleSelect, checkedItems}) => (
-  <Modal show={openAssignPlayersModal} onHide={closeAssignPlayersModal}>
+  <Modal animation={false} show={openAssignPlayersModal} onHide={closeAssignPlayersModal}>
     <Modal.Header closeButton>
       <Modal.Title>Assign Players</Modal.Title>
     </Modal.Header>
