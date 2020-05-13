@@ -59,8 +59,7 @@ class AssignPlayerModal extends Component {
     const {openAssignPlayersModal, closeAssignPlayersModal, agents} = this.props;
     if (agents.unassignedList) {
       return (
-        <React.Fragment>
-          <Modal show={openAssignPlayersModal} onHide={closeAssignPlayersModal}>
+          <Modal animation={false} show={openAssignPlayersModal} onHide={closeAssignPlayersModal}>
             <Modal.Header closeButton>
               <Modal.Title>Assign Players</Modal.Title>
             </Modal.Header>
@@ -102,7 +101,6 @@ class AssignPlayerModal extends Component {
               </Button>
             </Modal.Footer>
           </Modal>
-        </React.Fragment>
       );
     } else {
       return "";

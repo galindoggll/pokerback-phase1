@@ -40,6 +40,7 @@ class Page extends Component {
   }
 
   renderPlayers() {
+    console.log(this.props.agent.agent.player)
     if (this.props.agent.agent.player && this.props.agent.agent.player.length > 0) {
       return (
         this.props.agent.agent.player.map((player, i) => {
@@ -60,6 +61,7 @@ class Page extends Component {
   }
 
   render() {
+    console.log(this.props.agent.agent)
     const {userAgent, agent} = this.props.agent
     if (!userAgent && !agent) {
       return <div className="container">
