@@ -32,6 +32,10 @@ class AssignPlayerModal extends Component {
     this.setState({openAssignPlayersModal: this.props.openAssignPlayersModal});
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(agentDetails({id: this.props.userAgentId}));
+  }
+
   handleOpenAssignPlayerModal() {
     this.setState({openAssignPlayersModal: true});
   }
@@ -45,7 +49,7 @@ class AssignPlayerModal extends Component {
     params.players = obj;
     params.agent = this.props.agentId;
     this.props.dispatch(assignPlayers(params));
-    this.props.dispatch(agentDetails({id: this.props.userAgentId}));
+    //this.props.dispatch(agentDetails({id: this.props.userAgentId}));
     this.props.closeAssignPlayersModal();
   }
 
@@ -59,7 +63,7 @@ class AssignPlayerModal extends Component {
     const {openAssignPlayersModal, closeAssignPlayersModal, agents} = this.props;
     if (agents.unassignedList) {
       return (
-          <Modal animation={false} show={openAssignPlayersModal} onHide={closeAssignPlayersModal}>
+          <Modal show={openAssignPlayersModal} onHide={closeAssignPlayersModal}>
             <Modal.Header closeButton>
               <Modal.Title>Assign Players</Modal.Title>
             </Modal.Header>

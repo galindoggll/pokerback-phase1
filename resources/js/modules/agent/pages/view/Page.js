@@ -13,6 +13,7 @@ class Page extends Component {
   static propTypes = {
     match: PropTypes.object,
     agent: PropTypes.object,
+    userAgent: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
   }
 
@@ -40,10 +41,9 @@ class Page extends Component {
   }
 
   renderPlayers() {
-    console.log(this.props.agent.agent.player)
-    if (this.props.agent.agent.player && this.props.agent.agent.player.length > 0) {
+    if (this.props.agent.player && this.props.agent.player.length > 0) {
       return (
-        this.props.agent.agent.player.map((player, i) => {
+        this.props.agent.player.map((player, i) => {
           return (
             <tr key={i}>
               <td>{player.playingId}</td>
@@ -61,8 +61,7 @@ class Page extends Component {
   }
 
   render() {
-    console.log(this.props.agent.agent)
-    const {userAgent, agent} = this.props.agent
+    const {userAgent, agent} = this.props
     if (!userAgent && !agent) {
       return <div className="container">
         <div className="row justify-content-center">
@@ -121,7 +120,7 @@ class Page extends Component {
                   </thead>
                   <tbody>
                    {
-                     this.props.agent.agent && this.renderPlayers()
+                     this.props.agent && this.renderPlayers()
                    }
                   </tbody>
                 </table>
@@ -136,12 +135,12 @@ class Page extends Component {
             </div>
           </div>
           {
-            this.props.agent.agent && this.props.agent.userAgent &&
+            this.props.agent && this.props.userAgent &&
             <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
                                closeAssignPlayersModal={this.setToggleAssignPlayerModal}
                                unassignedList={this.props}
-                               userAgentId={this.props.agent.userAgent.id}
-                               agentId={this.props.agent.agent.id}
+                               userAgentId={this.props.userAgent.id}
+                               agentId={this.props.agent.id}
             />
           }
         </div>

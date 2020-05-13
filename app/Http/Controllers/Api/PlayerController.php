@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Agent;
 use App\Player;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -49,7 +50,10 @@ class PlayerController extends Controller
             }
         }
 
-        return response()->json(['success'], 200);
+
+        $info = Agent::where('id', $ids['agent'])->with('player.user')->get();
+
+        return response()->json(["info" => $info], 200);
     }
 
     public function update(Request $request)

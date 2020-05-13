@@ -6,7 +6,10 @@ import Page from './Page'
 const mapStateToProps = (state, router) => {
   const { params } = router.match
   return {
-    agent: state.agents
+    agent: state.agents.agent,
+    userAgent: state.agents.userAgent,
+    playerList: state.agents.playerList,
+    unassignedList: state.agents.unassignedList
   }
 }
 

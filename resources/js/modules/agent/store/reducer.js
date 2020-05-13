@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   currentPage: 0,
+  agent: {},
   agents: {},
   data: [],
   from: 0,
@@ -17,6 +18,9 @@ const initialState = {
   prevPageUrl: null,
   to: 0,
   total: 0,
+  userAgent: {},
+  playerList: [],
+  unassignedList: [],
 }
 
 const reducer = (state = initialState, { type, payload = null }) => {
@@ -61,8 +65,15 @@ function playersList(state, payload) {
 }
 
 function assignPlayers(state, payload) {
+  console.log(payload);
+  let playerList = [];
+  if (payload.info[0] && payload.info[0].player) {
+    playerList = payload.info[0].player
+  }
   return Object.assign({}, state, {
     ...state,
+    agent: payload.info[0],
+    playerList: playerList,
   });
 }
 
