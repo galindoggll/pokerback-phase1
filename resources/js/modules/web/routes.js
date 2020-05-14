@@ -5,7 +5,7 @@ const routes = [
   {
     path: '/',
     exact: true,
-    component: lazy(() => import('./pages/home/index')),
+    component: lazy(() => import('./pages/home/private/index')),
   }
 ]
 

@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import PropTypes from "prop-types"
 
 // import components
-import Header from "./components/Header"
+import Header from "../private/components/Header"
 import Loader from 'react-loader-spinner'
 
 // import services
@@ -15,14 +15,10 @@ class Page extends Component {
     user: PropTypes.object
   }
 
-  componentDidMount() {
-    // this.props.dispatch(articleListRequest({ url: '/articles/published' }))
-  }
-
   render() {
     return (
       <div>
-        <Header/>
+        <Header user={this.props.user} isAuthenticated={this.props.isAuthenticated}/>
       </div>)
   }
 }
