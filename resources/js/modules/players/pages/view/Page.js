@@ -1,6 +1,7 @@
 // import libs
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import {playerDetailRequest} from '../../service'
 
 import Loader from "react-loader-spinner";
@@ -31,7 +32,7 @@ class Page extends Component {
   }
 
   render() {
-    if (!this.props.playerDetail) {
+    if (!_.isEmpty(this.props.playerDetail)) {
       return (
         <div className="container">
           <div className="row justify-content-center">

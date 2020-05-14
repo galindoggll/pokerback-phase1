@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {playerListOfAgentRequest} from '../../service'
+import _ from 'lodash'
 
 // import components
 import {Link} from 'react-router-dom'
@@ -57,7 +58,24 @@ class Page extends Component {
 
   render() {
     const {players} = this.props
-    if (players) {
+    if (_.isEmpty(players)) {
+      return (
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-auto">
+              <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={2000} //3 secs
+
+              />
+            </div>
+          </div>
+        </div>
+      )
+    } else {
       return (
         <div className="container">
           <div className="row">
@@ -79,23 +97,6 @@ class Page extends Component {
                 {this.renderPlayers()}
                 </tbody>
               </table>
-            </div>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-auto">
-              <Loader
-                type="Puff"
-                color="#00BFFF"
-                height={100}
-                width={100}
-                timeout={2000} //3 secs
-
-              />
             </div>
           </div>
         </div>

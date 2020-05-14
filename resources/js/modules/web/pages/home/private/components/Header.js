@@ -15,7 +15,7 @@ const Header = ({user, isAuthenticated}) => (
       <img src={logo} className="img-fluid" alt="Responsive image"/>
     </div>
     {
-      isAuthenticated && user.type === 0 &&
+      isAuthenticated && user.type == 0 &&
       <div className="card-deck mb-3 text-center mt-3">
         <div className="card mb-4 box-shadow">
           <div className="card-header">
@@ -44,7 +44,7 @@ const Header = ({user, isAuthenticated}) => (
       </div>
     }
     {
-      isAuthenticated && user.type === 1 &&
+      isAuthenticated && user.type == 1 &&
       <div className="card-deck mb-3 text-center mt-3">
         <div className="card mb-4 box-shadow">
           <div className="card-header">

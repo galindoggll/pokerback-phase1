@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import Loader from 'react-loader-spinner'
+import _ from 'lodash'
 import {agentListRequest} from '../../service'
 
 // import components
@@ -53,7 +54,7 @@ class Page extends Component {
 
   render() {
     const {agents} = this.props
-    if (agents) {
+    if (!_.isEmpty(agents)) {
       return (
         <div className="container">
           <div className="row">

@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {useHistory} from 'react-router-dom';
 import Loader from 'react-loader-spinner'
+import _ from 'lodash'
 import {agentDetails, unassignedPlayers, assignPlayers, unassignPlayer} from '../../service'
 
 // import components
@@ -75,7 +76,7 @@ class Page extends Component {
   }
 
   renderPlayers() {
-    if (this.props.agent.player && this.props.agent.player.length > 0) {
+    if (!_.isEmpty(this.props.agent.player) && this.props.agent.player.length > 0) {
       return (
         this.props.agent.player.map((player, i) => {
           return (
@@ -103,7 +104,7 @@ class Page extends Component {
 
   render() {
     const {userAgent, agent} = this.props
-    if (!userAgent && !agent) {
+    if (_.isEmpty(userAgent) && _.isEmpty(agent)) {
       return <div className="container">
         <div className="row justify-content-center">
           <div className="col-auto">
@@ -155,26 +156,23 @@ class Page extends Component {
                   </thead>
                   <tbody>
                   {
-                    this.props.agent && this.renderPlayers()
+                    !_.isEmpty(this.props.agent) && this.renderPlayers()
                   }
                   </tbody>
                 </table>
               </div>
               <hr/>
               <div className="row">
-                {
-                  this.props.unassignedList && this.props.agent && this.props.userAgent &&
-                  <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
-                                     closeAssignPlayersModal={this.setToggleAssignPlayerModal}
-                                     unassignedList={this.props.unassignedList}
-                                     userAgentId={this.props.userAgent.id}
-                                     agentId={this.props.agent.id}
-                                     checked={this.state.checked}
-                                     handleSaveAssignment={this.handleSaveAssignment}
-                                     handleSelect={this.handleSelect}
-                                     checkedItems={this.state.checkedItems}
-                  />
-                }
+                <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
+                                   closeAssignPlayersModal={this.setToggleAssignPlayerModal}
+                                   unassignedList={this.props.unassignedList}
+                                   userAgentId={this.props.userAgent.id}
+                                   agentId={this.props.agent.id}
+                                   checked={this.state.checked}
+                                   handleSaveAssignment={this.handleSaveAssignment}
+                                   handleSelect={this.handleSelect}
+                                   checkedItems={this.state.checkedItems}
+                />
               </div>
             </div>
           </div>
