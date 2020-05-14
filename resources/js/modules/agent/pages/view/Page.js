@@ -49,6 +49,7 @@ class Page extends Component {
   }
 
   handleSaveAssignment() {
+    console.log(this.props.agent);
     let obj = Array.from(this.state.checkedItems).reduce((obj, [key, value]) => {
       obj[key] = value;
       return obj;
@@ -56,7 +57,6 @@ class Page extends Component {
     let params = {};
     params.players = obj;
     params.agent = this.props.agent.id;
-    console.log(params);
     this.props.dispatch(assignPlayers(params));
     this.props.dispatch(unassignedPlayers());
     //this.props.dispatch(agentDetails({id: this.props.userAgentId}));
@@ -77,7 +77,7 @@ class Page extends Component {
   }
 
   renderPlayers() {
-    if (!_.isEmpty(this.props.agent.player)) {
+    if (!_.isUndefined(this.props.agent.player)) {
       return (
         this.props.agent.player.map((player, i) => {
           return (
@@ -97,14 +97,17 @@ class Page extends Component {
         })
       )
     } else {
-      return <tr>
+      return (
+      <tr>
         <td colSpan="3">No Players Assigned</td>
       </tr>
+      )
     }
   }
 
   render() {
     const {userAgent, agent} = this.props
+    console.log(agent);
     if (_.isEmpty(userAgent) && _.isEmpty(agent)) {
       return <div className="container">
         <div className="row justify-content-center">
