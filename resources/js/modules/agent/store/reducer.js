@@ -48,6 +48,7 @@ function list(state, payload) {
 }
 
 function detail(state, payload) {
+  console.log(payload)
   let playerList = [];
   if (payload.info[0] && payload.info[0].player) {
     playerList = payload.info[0].player
