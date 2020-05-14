@@ -46,7 +46,7 @@ const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, una
         {
           _.isEmpty(unassignedList) &&
           <tr>
-            <td colspan={3}>No Unassigned Players</td>
+            <td colSpan={3}>No Unassigned Players</td>
           </tr>
         }
         </tbody>

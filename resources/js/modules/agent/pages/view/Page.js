@@ -49,7 +49,6 @@ class Page extends Component {
   }
 
   handleSaveAssignment() {
-    console.log(this.props.agent);
     let obj = Array.from(this.state.checkedItems).reduce((obj, [key, value]) => {
       obj[key] = value;
       return obj;
@@ -99,7 +98,7 @@ class Page extends Component {
     } else {
       return (
       <tr>
-        <td colSpan="3">No Players Assigned</td>
+        <td colSpan={3}>No Players Assigned</td>
       </tr>
       )
     }
@@ -107,7 +106,6 @@ class Page extends Component {
 
   render() {
     const {userAgent, agent} = this.props
-    console.log(agent);
     if (_.isEmpty(userAgent) && _.isEmpty(agent)) {
       return <div className="container">
         <div className="row justify-content-center">
@@ -155,7 +153,7 @@ class Page extends Component {
                   <tr>
                     <th>Player ID</th>
                     <th>Nickname</th>
-                    <th>Email</th>
+                    <th colSpan={2}>Email</th>
                   </tr>
                   </thead>
                   <tbody>
