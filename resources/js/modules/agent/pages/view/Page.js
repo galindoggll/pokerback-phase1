@@ -56,6 +56,7 @@ class Page extends Component {
     let params = {};
     params.players = obj;
     params.agent = this.props.agent.id;
+    console.log(params);
     this.props.dispatch(assignPlayers(params));
     this.props.dispatch(unassignedPlayers());
     //this.props.dispatch(agentDetails({id: this.props.userAgentId}));
@@ -76,7 +77,7 @@ class Page extends Component {
   }
 
   renderPlayers() {
-    if (!_.isEmpty(this.props.agent.player) && this.props.agent.player.length > 0) {
+    if (!_.isEmpty(this.props.agent.player)) {
       return (
         this.props.agent.player.map((player, i) => {
           return (
@@ -163,17 +164,14 @@ class Page extends Component {
               </div>
               <hr/>
               <div className="row">
-                {
-                  !_.isEmpty(this.props.unassignedList) &&
-                  <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
-                                     closeAssignPlayersModal={this.setToggleAssignPlayerModal}
-                                     unassignedList={this.props.unassignedList}
-                                     checked={this.state.checked}
-                                     handleSaveAssignment={this.handleSaveAssignment}
-                                     handleSelect={this.handleSelect}
-                                     checkedItems={this.state.checkedItems}
-                  />
-                }
+                <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
+                                   closeAssignPlayersModal={this.setToggleAssignPlayerModal}
+                                   unassignedList={this.props.unassignedList}
+                                   checked={this.state.checked}
+                                   handleSaveAssignment={this.handleSaveAssignment}
+                                   handleSelect={this.handleSelect}
+                                   checkedItems={this.state.checkedItems}
+                />
 
               </div>
             </div>
