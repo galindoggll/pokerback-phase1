@@ -32,7 +32,7 @@ class Page extends Component {
   }
 
   render() {
-    if (!_.isEmpty(this.props.playerDetail)) {
+    if (_.isEmpty(this.props.playerDetail)) {
       return (
         <div className="container">
           <div className="row justify-content-center">

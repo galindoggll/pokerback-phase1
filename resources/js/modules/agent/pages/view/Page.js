@@ -163,16 +163,18 @@ class Page extends Component {
               </div>
               <hr/>
               <div className="row">
-                <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
-                                   closeAssignPlayersModal={this.setToggleAssignPlayerModal}
-                                   unassignedList={this.props.unassignedList}
-                                   userAgentId={this.props.userAgent.id}
-                                   agentId={this.props.agent.id}
-                                   checked={this.state.checked}
-                                   handleSaveAssignment={this.handleSaveAssignment}
-                                   handleSelect={this.handleSelect}
-                                   checkedItems={this.state.checkedItems}
-                />
+                {
+                  !_.isEmpty(this.props.unassignedList) &&
+                  <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
+                                     closeAssignPlayersModal={this.setToggleAssignPlayerModal}
+                                     unassignedList={this.props.unassignedList}
+                                     checked={this.state.checked}
+                                     handleSaveAssignment={this.handleSaveAssignment}
+                                     handleSelect={this.handleSelect}
+                                     checkedItems={this.state.checkedItems}
+                  />
+                }
+
               </div>
             </div>
           </div>

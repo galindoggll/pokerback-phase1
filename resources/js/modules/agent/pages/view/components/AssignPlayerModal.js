@@ -7,15 +7,13 @@ const propTypes = {
   openAssignPlayersModal: PropTypes.bool,
   closeAssignPlayersModal: PropTypes.func,
   unassignedList: PropTypes.object,
-  userAgentId: PropTypes.number,
-  agentId: PropTypes.number,
   checked: PropTypes.bool,
   handleSaveAssignment: PropTypes.func,
   handleSelect: PropTypes.func,
   checkedItems: PropTypes.object
 }
 
-const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, unassignedList, userAgentId, agentId, checked, handleSaveAssignment, handleSelect, checkedItems}) => (
+const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, unassignedList, checked, handleSaveAssignment, handleSelect, checkedItems}) => (
   <div className="col-md-12">
     <h4 className="">Unassigned Players</h4>
     <div className="row">
