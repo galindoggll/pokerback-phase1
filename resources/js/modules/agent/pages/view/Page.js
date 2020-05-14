@@ -163,7 +163,7 @@ class Page extends Component {
               <hr/>
               <div className="row">
                 {
-                  this.props.unassignedList &&
+                  this.props.unassignedList && this.props.agent && this.props.userAgent &&
                   <AssignPlayerModal openAssignPlayersModal={this.state.openAssignPlayersModal}
                                      closeAssignPlayersModal={this.setToggleAssignPlayerModal}
                                      unassignedList={this.props.unassignedList}
