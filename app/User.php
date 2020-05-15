@@ -56,7 +56,7 @@ class User extends Authenticatable
     {
         return static::where('type', 2)
             ->with('player')
-            ->paginate();
+            ->paginate(10);
     }
 
     public static function loadPlayersNotAssigned()

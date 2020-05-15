@@ -10,9 +10,12 @@ function transformResponse(params) {
   return Transformer.fetch(params)
 }
 
-export function playerListRequest() {
+export function playerListRequest({pageNumber = 1, url = '/players'}) {
   return dispatch => {
-    Http.get('players/')
+    if (pageNumber > 1) {
+      url = url + `?page=${pageNumber}`
+    }
+    Http.get(url)
       .then((res) => {
         dispatch(playerActions.list(transformResponse(res.data)))
       })
@@ -81,9 +84,13 @@ export function importData(params) {
   }
 }
 
-export function playerListOfAgentRequest(params) {
+export function playerListOfAgentRequest({pageNumber = 1, url = '/agent/players/', params}) {
   return dispatch => {
-    Http.get('/agent/players/' + params.id)
+    let url1 = url + params.id;
+    if (pageNumber > 1) {
+      url1 = url1 + `?page=${pageNumber}`
+    }
+    Http.get(url1)
       .then((res) => {
         dispatch(playerActions.agentPlayerList(transformResponse(res.data)))
       })

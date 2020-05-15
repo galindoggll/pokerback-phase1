@@ -3,9 +3,11 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
 import {playerListRequest, importData} from '../../service'
+import _ from 'lodash'
 
 // import components
 import {Link} from 'react-router-dom'
+import Pagination from './../../../../utils/Pagination'
 import Loader from 'react-loader-spinner'
 
 class Page extends Component {
@@ -27,15 +29,17 @@ class Page extends Component {
       data: {},
       isImported: false,
       isFileReady: false,
+      isExtracted: false,
       loading: this.props.isExtracted,
     }
     this.handleOnChange = this.handleOnChange.bind(this)
     this.createFile = this.createFile.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.pageChange = this.pageChange.bind(this)
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.isExtracted !== prevProps.isExtracted) {
+    if (this.props.players !== prevProps.players) {
       this.setState({loading: false})
     }
   }
@@ -49,7 +53,7 @@ class Page extends Component {
     this.setState({loading: true})
     let form = new FormData()
     form.append('file', this.state.file)
-    this.setState({isImported: true})
+    this.setState({isExtracted: true})
     this.props.dispatch(importData(form))
   }
 
@@ -65,6 +69,10 @@ class Page extends Component {
     this.setState({
       file: file,
     })
+  }
+
+  pageChange(pageNumber) {
+    this.props.dispatch(playerListRequest({ pageNumber }))
   }
 
   renderPlayers() {
@@ -99,7 +107,7 @@ class Page extends Component {
   }
 
   render() {
-    if (this.state.loading) {
+    if (_.isEmpty(this.props.players) || this.state.loading) {
       return (
         <div className="container">
           <div className="row justify-content-center">
@@ -109,53 +117,11 @@ class Page extends Component {
                 color="#00BFFF"
                 height={100}
                 width={100}
-                timeout={4000} //3 secs
 
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-auto">
-              <div className="row">
-                <div className="col"><h1>Players</h1></div>
-              </div>
-              <table className="table table-responsive table-striped">
-                <thead className="thead-inverse">
-                <tr>
-                  <th>Player ID</th>
-                  <th>Nickname</th>
-                  <th>Winnings</th>
-                  <th>Rake</th>
-                  <th colSpan={2}></th>
-                </tr>
-                </thead>
-                <tbody>
-                {this.renderPlayers()}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <hr/>
-          <div className="row">
-            <div className="col"><h3>Import Data</h3></div>
-          </div>
-          <div className="row">
-            <div className="input-group col-md-6">
-              <div className="custom-file">
-                <input type="file" className="custom-file-input" onChange={e => this.handleOnChange(e)}/>
-                <label className="custom-file-label">{this.state.fileName}</label>
-              </div>
-              <div className="input-group-append">
-                <button className="btn btn-outline-secondary" disabled={!this.state.isFileReady}
-                        onClick={this.handleSubmit}>
-                  Import Data
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      )
+        </div>)
     } else {
       return (
         <div className="container">
@@ -178,6 +144,7 @@ class Page extends Component {
                 {this.renderPlayers()}
                 </tbody>
               </table>
+              <Pagination meta={this.props.meta} onChange={this.pageChange}/>
             </div>
           </div>
           <hr/>
