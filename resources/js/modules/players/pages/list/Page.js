@@ -156,7 +156,7 @@ class Page extends Component {
           <div className="row">
             <div className="col"><h3>Import Data</h3></div>
           </div>
-          <div className="row">
+          <div className="row mb-3">
             <div className="input-group col-md-6">
               <div className="input-group-append">
                 <button className="btn btn-outline-secondary"
