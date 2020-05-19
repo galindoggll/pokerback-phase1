@@ -11,7 +11,7 @@ class PlayerExport implements FromView
     public function view(): View
     {
         return view('player', [
-            'players' => Player::all()
+            'players' => Player::with('user')->get()
         ]);
     }
 }

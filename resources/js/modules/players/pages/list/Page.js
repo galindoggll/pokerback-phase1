@@ -88,6 +88,7 @@ class Page extends Component {
             <tr>
               <td>{player.player[0].playingId}</td>
               <td>{player.username}</td>
+              <td>{player.player[0].nickname}</td>
               <td>{player.player[0].winnings || 0}</td>
               <td>{player.player[0].rake || 0}</td>
               <td>
@@ -139,6 +140,7 @@ class Page extends Component {
                 <thead className="thead-inverse">
                 <tr>
                   <th>Player ID</th>
+                  <th>Username</th>
                   <th>Nickname</th>
                   <th>Winnings</th>
                   <th>Rake</th>
