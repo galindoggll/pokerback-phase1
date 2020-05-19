@@ -37,7 +37,7 @@ class PlayerDataImport implements ToCollection, WithHeadingRow, WithStartRow
 
     public function headingRow(): int
     {
-        return 3;
+        return 1;
     }
 
     public function batchSize(): int
@@ -47,6 +47,6 @@ class PlayerDataImport implements ToCollection, WithHeadingRow, WithStartRow
 
     public function startRow(): int
     {
-        return 6;
+        return 2;
     }
 }

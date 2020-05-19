@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Agent;
+use App\Exports\PlayerExport;
 use App\Player;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Imports\PlayerDataImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PlayerController extends Controller
 {
@@ -107,5 +110,10 @@ class PlayerController extends Controller
     {
         Excel::import(new PlayerDataImport, $request->file('file'));
         return User::loadAllPlayers();
+    }
+
+    public function export()
+    {
+        return Excel::download(new PlayerExport, 'players.csv');
     }
 }

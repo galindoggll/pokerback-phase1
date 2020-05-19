@@ -2,6 +2,8 @@ import Http from '../../utils/Http'
 import Transformer from '../../utils/Transformer'
 import * as playerActions from './store/actions'
 
+const FileDownload = require('js-file-download');
+
 function transformRequest(parms) {
   return Transformer.send(parms)
 }
@@ -98,5 +100,17 @@ export function playerListOfAgentRequest({pageNumber = 1, url = '/agent/players/
         // TODO: handle err
         console.error(err.response)
       })
+  }
+}
+
+export function exportPlayer() {
+  return dispatch => {
+    Http.get('export').then((res) => {
+      console.log(res)
+      FileDownload(res.data, 'player.csv');
+    }).catch((err) => {
+      // TODO: handle err
+      console.error(err.response)
+    })
   }
 }

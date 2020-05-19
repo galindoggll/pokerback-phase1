@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
-import {playerListRequest, importData} from '../../service'
+import {playerListRequest, importData, exportPlayer} from '../../service'
 import _ from 'lodash'
 
 // import components
@@ -36,6 +36,7 @@ class Page extends Component {
     this.createFile = this.createFile.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.pageChange = this.pageChange.bind(this)
+    this.handleDownload = this.handleDownload.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -73,6 +74,10 @@ class Page extends Component {
 
   pageChange(pageNumber) {
     this.props.dispatch(playerListRequest({ pageNumber }))
+  }
+
+  handleDownload() {
+    this.props.dispatch(exportPlayer())
   }
 
   renderPlayers() {
@@ -150,6 +155,16 @@ class Page extends Component {
           <hr/>
           <div className="row">
             <div className="col"><h3>Import Data</h3></div>
+          </div>
+          <div className="row">
+            <div className="input-group col-md-6">
+              <div className="input-group-append">
+                <button className="btn btn-outline-secondary"
+                        onClick={this.handleDownload}>
+                  Download Players
+                </button>
+              </div>
+            </div>
           </div>
           <div className="row">
             <div className="input-group col-md-6">
