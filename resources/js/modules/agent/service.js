@@ -120,13 +120,13 @@ export function unassignPlayer(params) {
 export function userAgentUpdateRequest(params) {
   return dispatch => (
     new Promise((resolve, reject) => {
-      Http.patch(`/update-agent/${params.id}`, Transformer.send(params))
+      Http.post('/update-agent/'+params.id, params)
         .then(res => {
-          dispatch(agentActions.agentUpdate(Transformer.fetch(res.data.user)))
+          dispatch(agentActions.agentUpdate(res.data))
           return resolve()
         })
         .catch((err) => {
-          const statusCode = err.response.status;
+          const statusCode = err.response;
           const data = {
             error: null,
             statusCode,

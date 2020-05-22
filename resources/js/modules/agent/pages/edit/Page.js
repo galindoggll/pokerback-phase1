@@ -1,6 +1,7 @@
 // import libs
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {Redirect} from 'react-router-dom'
 import {useHistory} from 'react-router-dom';
 import {browserHistory} from 'react-router'
 import Loader from 'react-loader-spinner'
@@ -30,7 +31,8 @@ class Page extends Component {
     this.state = {
       userAgent: this.props.userAgent,
       editedUserAgent: {},
-      errors: this.validator.errors
+      errors: this.validator.errors,
+      loading: this.props.isExtracted,
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -44,7 +46,12 @@ class Page extends Component {
     if (!_.isEqual(this.state.userAgent, userAgent)) {
       this.setState({userAgent})
     }
+  }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.userAgent !== prevProps.userAgent) {
+      this.setState({loading: false})
+    }
   }
 
   handleChange(name, value) {
@@ -62,6 +69,7 @@ class Page extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    this.setState({loading: true})
     let userAgent = this.state.userAgent
     const {errors} = this.validator
 
@@ -88,7 +96,6 @@ class Page extends Component {
 
         this.setState({errors})
       })
-    this.props.history.push('/agent/' + this.state.userAgent.id);
   }
 
   handleBack() {
@@ -96,8 +103,7 @@ class Page extends Component {
   }
 
   render() {
-    const {userAgent} = this.props
-    if (_.isEmpty(userAgent)) {
+    if (this.state.loading) {
       return <div className="container">
         <div className="row justify-content-center">
           <div className="col-auto">
@@ -106,85 +112,84 @@ class Page extends Component {
               color="#00BFFF"
               height={100}
               width={100}
-              timeout={2000} //3 secs
             />
           </div>
         </div>
       </div>
-    } else {
-      const {userAgent, errors} = this.state
-      return (
-        <div className="container">
-          <form onSubmit={e => this.handleSubmit(e)}>
-            <div className="row">
-              <div className="col-md-6">
-                <h4 className="mb-3">Edit Agent Profile</h4>
-                <div className="row">
-                  <div className="col-md-8 mb-3">
-                    <label>Name</label>
-                    <input type="text"
-                           id="name"
-                           name="name"
-                           className={`form-control ${errors.has('name') && 'is-invalid'} `}
-                           value={userAgent.name}
-                           onChange={e => this.handleChange(e.target.name, e.target.value)}/>
-                    {errors.has('name') && <div className="invalid-feedback">{errors.first('name')}</div>}
-                  </div>
+    }
+    const {userAgent, errors} = this.state
+    return (
+      <div className="container">
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <div className="row">
+            <div className="col-md-6">
+              <h4 className="mb-3">Edit Agent Profile</h4>
+              <div className="row">
+                <div className="col-md-8 mb-3">
+                  <label>Name</label>
+                  <input type="text"
+                         id="name"
+                         name="name"
+                         className={`form-control ${errors.has('name') && 'is-invalid'} `}
+                         value={userAgent.name}
+                         onChange={e => this.handleChange(e.target.name, e.target.value)}/>
+                  {errors.has('name') && <div className="invalid-feedback">{errors.first('name')}</div>}
                 </div>
-                <div className="row">
-                  <div className="col-md-8 mb-3">
-                    <label>Username</label>
-                    <input type="text"
-                           id="username"
-                           name="username"
-                           className={`form-control ${errors.has('username') && 'is-invalid'} `}
-                           value={userAgent.username}
-                           onChange={e => this.handleChange(e.target.name, e.target.value)}/>
-                    {errors.has('username') && <div className="invalid-feedback">{errors.first('username')}</div>}
-                  </div>
+              </div>
+              <div className="row">
+                <div className="col-md-8 mb-3">
+                  <label>Username</label>
+                  <input type="text"
+                         id="username"
+                         name="username"
+                         className={`form-control ${errors.has('username') && 'is-invalid'} `}
+                         value={userAgent.username}
+                         onChange={e => this.handleChange(e.target.name, e.target.value)}/>
+                  {errors.has('username') && <div className="invalid-feedback">{errors.first('username')}</div>}
                 </div>
-                <div className="row">
-                  <div className="col-md-8 mb-3">
-                    <label>Email</label>
-                    <input type="email"
-                           id="email"
-                           name="email"
-                           className={`form-control ${errors.has('email') && 'is-invalid'} `}
-                           value={userAgent.email}
-                           onChange={e => this.handleChange(e.target.name, e.target.value)}/>
-                    {errors.has('email') && <div className="invalid-feedback">{errors.first('email')}</div>}
-                  </div>
+              </div>
+              <div className="row">
+                <div className="col-md-8 mb-3">
+                  <label>Email</label>
+                  <input type="email"
+                         id="email"
+                         name="email"
+                         className={`form-control ${errors.has('email') && 'is-invalid'} `}
+                         value={userAgent.email}
+                         onChange={e => this.handleChange(e.target.name, e.target.value)}/>
+                  {errors.has('email') && <div className="invalid-feedback">{errors.first('email')}</div>}
                 </div>
-                <div className="row">
-                  <div className="col-md-8 mb-3">
-                    <label>Phone</label>
-                    <input type="text"
-                           id="phone"
-                           name="phone"
-                           className={`form-control ${errors.has('phone') && 'is-invalid'} `}
-                           value={userAgent.phone}
-                           onChange={e => this.handleChange(e.target.name, e.target.value)}/>
-                    {errors.has('phone') && <div className="invalid-feedback">{errors.first('phone')}</div>}
-                  </div>
+              </div>
+              <div className="row">
+                <div className="col-md-8 mb-3">
+                  <label>Phone</label>
+                  <input type="text"
+                         id="phone"
+                         name="phone"
+                         className={`form-control ${errors.has('phone') && 'is-invalid'} `}
+                         value={userAgent.phone}
+                         onChange={e => this.handleChange(e.target.name, e.target.value)}/>
+                  {errors.has('phone') && <div className="invalid-feedback">{errors.first('phone')}</div>}
                 </div>
-                <div className="row">
-                  <div className="col-md-3 mb-3 align-self-end">
-                    <button className="btn btn-md btn-warning btn-block" type="button" onClick={() => this.handleBack()}>
-                      Back
-                    </button>
-                  </div>
-                  <div className="col-md-3 mb-3 align-self-end">
-                    <button className="btn btn-md btn-primary btn-block" type="submit">
-                      Save
-                    </button>
-                  </div>
+              </div>
+              <div className="row">
+                <div className="col-md-3 mb-3 align-self-end">
+                  <button className="btn btn-md btn-warning btn-block" type="button" onClick={() => this.handleBack()}>
+                    Back
+                  </button>
+                </div>
+                <div className="col-md-3 mb-3 align-self-end">
+                  <button className="btn btn-md btn-primary btn-block" type="submit">
+                    Save
+                  </button>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-      )
-    }
+          </div>
+        </form>
+      </div>
+    )
+
   }
 }
 

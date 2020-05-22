@@ -134,6 +134,12 @@ class Page extends Component {
               <h4 className="mb-3">Agent Profile</h4>
               <div className="row">
                 <div className="col-md-8 mb-3">
+                  <label>Name</label>
+                  <div className="form-control">{userAgent.name}</div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-8 mb-3">
                   <label>Username</label>
                   <div className="form-control">{userAgent.username}</div>
                 </div>
