@@ -116,3 +116,35 @@ export function unassignPlayer(params) {
     })
   )
 }
+
+export function userAgentUpdateRequest(params) {
+  return dispatch => (
+    new Promise((resolve, reject) => {
+      Http.patch(`/update-agent/${params.id}`, Transformer.send(params))
+        .then(res => {
+          dispatch(agentActions.agentUpdate(Transformer.fetch(res.data.user)))
+          return resolve()
+        })
+        .catch((err) => {
+          const statusCode = err.response.status;
+          const data = {
+            error: null,
+            statusCode,
+          };
+
+          if (statusCode === 422) {
+            const resetErrors = {
+              errors: err.response.data,
+              replace: false,
+              searchStr: '',
+              replaceStr: '',
+            };
+            data.error = Transformer.resetValidationFields(resetErrors);
+          } else if (statusCode === 401) {
+            data.error = err.response.data.message;
+          }
+          return reject(data);
+        })
+    })
+  )
+}

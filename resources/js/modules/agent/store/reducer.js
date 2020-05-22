@@ -4,6 +4,7 @@ import {
   ASSIGN_PLAYERS,
   PLAYERS_LIST,
   UNASSIGN_PLAYER,
+  AGENT_UPDATE,
 } from './action-types'
 
 const initialState = {
@@ -36,6 +37,8 @@ const reducer = (state = initialState, { type, payload = null }) => {
       return playersList(state, payload)
     case UNASSIGN_PLAYER:
       return unassignPlayer(state, payload)
+    case AGENT_UPDATE:
+      return update(state, payload)
     default:
       return state
   }
@@ -90,6 +93,14 @@ function unassignPlayer(state, payload) {
     agent: payload.info[0],
     playerList: playerList,
     unassignedList: payload.players
+  });
+}
+
+function update(state, payload) {
+  return Object.assign({}, state, {
+    ...state,
+    agent: payload.info[0],
+    userAgent: payload.user,
   });
 }
 

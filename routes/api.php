@@ -30,6 +30,7 @@ Route::group(["prefix" => "{$api_version}"], function() {
         Route::post('import/', 'PlayerController@import');
         Route::get('agent/players/{id}', 'AgentController@showAllPlayers');
         Route::get('export/', 'PlayerController@export');
+        Route::match(['put', 'patch'], 'update-agent/{id}', 'AgentController@update');
     });
 
     // register auth routes

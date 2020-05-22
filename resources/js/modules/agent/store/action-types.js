@@ -3,6 +3,7 @@ export const AGENT_DETAIL = 'AGENT_DETAIL'
 export const ASSIGN_PLAYERS = 'ASSIGN_PLAYERS'
 export const UNASSIGN_PLAYER = 'UNASSIGN_PLAYER'
 export const PLAYERS_LIST = 'PLAYERS_LIST'
+export const AGENT_UPDATE = 'AGENT_UPDATE'
 
 export default {
   AGENT_LIST,
@@ -10,4 +11,5 @@ export default {
   ASSIGN_PLAYERS,
   PLAYERS_LIST,
   UNASSIGN_PLAYER,
+  AGENT_UPDATE,
 }

@@ -12,6 +12,7 @@ import {
   ASSIGN_PLAYERS,
   PLAYERS_LIST,
   UNASSIGN_PLAYER,
+  AGENT_UPDATE,
 } from './action-types';
 
 export function list(payload) {
@@ -45,6 +46,13 @@ export function assignPlayers(payload) {
 export function unassignPlayer(payload) {
   return {
     type: UNASSIGN_PLAYER,
+    payload
+  }
+}
+
+export function agentUpdate(payload) {
+  return {
+    type: AGENT_UPDATE,
     payload
   }
 }

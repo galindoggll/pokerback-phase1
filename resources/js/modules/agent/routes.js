@@ -15,6 +15,12 @@ export default [
     component: lazy(() => import('./pages/view/index')),
   },
   {
+    path: '/agent/edit/:id',
+    exact: true,
+    auth: true,
+    component: lazy(() => import('./pages/edit/index')),
+  },
+  {
     path: '/assign-player/:id',
     exact: true,
     auth: true,

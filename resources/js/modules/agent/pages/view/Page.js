@@ -8,6 +8,7 @@ import {agentDetails, unassignedPlayers, assignPlayers, unassignPlayer} from '..
 
 // import components
 import AssignPlayerModal from "./components/AssignPlayerModal";
+import {Link} from 'react-router-dom'
 
 class Page extends Component {
   static displayName = 'AgentsPage'
@@ -32,6 +33,7 @@ class Page extends Component {
     this.handleSaveAssignment = this.handleSaveAssignment.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleRemovePlayer = this.handleRemovePlayer.bind(this);
+    this.handleBack = this.handleBack.bind(this);
   }
 
   componentWillMount() {
@@ -73,6 +75,10 @@ class Page extends Component {
     params.agent = this.props.agent.id;
     params.player = parseInt(e.target.value)
     this.props.dispatch(unassignPlayer(params));
+  }
+
+  handleBack() {
+    this.props.history.push('/agents');
   }
 
   renderPlayers() {
@@ -144,10 +150,20 @@ class Page extends Component {
                   <div className="form-control">{userAgent.phone}</div>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-md-3 mb-3 align-self-end">
+                  <button className="btn btn-md btn-warning btn-block" type="button" onClick={() => this.handleBack()}>
+                    Back
+                  </button>
+                </div>
+                <div className="col-md-3 mb-3 align-self-end">
+                  <Link to={`edit/${userAgent.id}`} className="btn btn-md btn-primary btn-block">Edit</Link>
+                </div>
+              </div>
             </div>
             <div className="col-md-6">
               <h4 className="">Assigned Players</h4>
-              <div className="row">
+              <div className="row overflow-auto" style={{maxHeight: "500px"}}>
                 <table className="table table-responsive table-striped">
                   <thead className="thead-inverse">
                   <tr>

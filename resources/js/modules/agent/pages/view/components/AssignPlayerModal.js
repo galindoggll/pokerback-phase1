@@ -16,8 +16,8 @@ const propTypes = {
 const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, unassignedList, checked, handleSaveAssignment, handleSelect, checkedItems}) => (
   <div className="col-md-12">
     <h4 className="">Unassigned Players</h4>
-    <div className="row">
-      <table className="table table-responsive table-striped">
+    <div className="row overflow-auto"  style={{maxHeight: "500px"}}>
+      <table className="table table-striped table-responsive-md">
         <thead>
         <tr>
           <th>Player ID</th>
@@ -25,7 +25,7 @@ const AssignPlayerModal = ({openAssignPlayersModal, closeAssignPlayersModal, una
           <th>Assign To Agent</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody className="overflow-auto">
         {
           !_.isEmpty(unassignedList) &&
           unassignedList.map((agent, i) => {
